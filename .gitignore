@@ -1,0 +1,17 @@
+build
+bin
+
+# libraries
+npm-debug.log
+node_modules
+
+# editor
+.vscode
+.idea
+
+coverage
+.env
+.DS_Store
+
+# integration
+integration-output
