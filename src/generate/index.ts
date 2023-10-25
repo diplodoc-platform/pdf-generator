@@ -1,6 +1,7 @@
 import {resolve} from 'path';
 
 import {asyncify, mapLimit} from 'async';
+// @ts-ignore
 import pcr from 'puppeteer-chromium-resolver';
 import {Browser} from 'puppeteer-core';
 import walkSync from 'walk-sync';
@@ -14,7 +15,7 @@ import {
 import {generatePdf} from './generatePdf';
 import {prepareGlobs} from './utils';
 
-interface GeneratePDFsOptions {
+export interface GeneratePDFsOptions {
     inputFolder: string;
     includeDirs?: string[];
     excludeDirs?: string[];
@@ -24,7 +25,7 @@ async function generatePdfs({
     inputFolder,
     includeDirs = ['**/'],
     excludeDirs = [],
-}: GeneratePDFsOptions): Status {
+}: GeneratePDFsOptions): Promise<Status> {
     const globs = prepareGlobs(includeDirs);
     const ignore = prepareGlobs(excludeDirs);
 
@@ -67,7 +68,7 @@ async function generatePdfs({
     );
 
     if (browser && browser.process() !== null) {
-        browser.process().kill('SIGINT');
+        browser.process()!.kill('SIGINT');
         await browser.close();
     }
 

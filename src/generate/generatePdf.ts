@@ -6,12 +6,12 @@ import {Browser} from 'puppeteer-core';
 import {PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status} from './constants';
 import {generatePdfStaticMarkup} from './utils';
 
-interface GeneratePDFOptions {
+export interface GeneratePDFOptions {
     singlePagePath: string;
     browser: Browser;
 }
 
-interface GeneratePDFResult {
+export interface GeneratePDFResult {
     status: Status;
     error?: Error;
 }

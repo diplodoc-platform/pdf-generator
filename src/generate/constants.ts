@@ -1,5 +1,7 @@
+import {PaperFormat} from 'puppeteer-core';
+
 export const PUPPETEER_PAGE_OPTIONS = {
-    format: 'A4',
+    format: 'a4' as PaperFormat,
     printBackground: true,
     margin: {top: '40px', bottom: '40px'},
 };

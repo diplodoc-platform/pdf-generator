@@ -15,3 +15,6 @@ coverage
 
 # integration
 integration-output
+
+# tests
+__tests__/stubs
