@@ -5,6 +5,7 @@
 
 # Build
 build
+integration-output
 
 #node
 node_modules

@@ -1,6 +1,6 @@
-import {generatePdf, generatePdfs} from './generate';
+import {generatePdfs} from './generate';
+import {generatePdf} from './generate/generatePdf';
 
-export default {
-    generatePdf,
-    generatePdfs,
-};
+export {generatePdfs, generatePdf};
+
+export default {generatePdfs, generatePdf};
