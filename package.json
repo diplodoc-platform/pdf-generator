@@ -1,5 +1,5 @@
 {
-  "name": "docs2pdf",
+  "name": "@diplodoc/docs2pdf",
   "version": "0.1.0",
   "description": "Package to turn Diplodoc projects into PDFs",
   "license": "MIT",
