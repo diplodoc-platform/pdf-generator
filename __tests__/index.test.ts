@@ -1,11 +1,10 @@
-import {dirname, join, resolve} from 'path';
+import {resolve} from 'path';
+import {execSync} from 'child_process';
 
 import {toMatchImageSnapshot} from 'jest-image-snapshot';
 import {fromPath} from 'pdf2pic';
 import puppeteer from 'puppeteer';
 import {Browser} from 'puppeteer-core';
-
-import {generatePdf} from '../src';
 
 expect.extend({toMatchImageSnapshot});
 
@@ -26,10 +25,7 @@ describe('integration', () => {
         // @ts-ignore
         browser = await puppeteer.launch({headless: true});
 
-        await generatePdf({
-            singlePagePath: join(dirname(pdfFile), 'single-page.json'),
-            browser,
-        });
+        execSync('node build/cmd/index.js -i integration-output');
     });
 
     it('works', async () => {

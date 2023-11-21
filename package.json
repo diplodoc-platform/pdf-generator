@@ -17,11 +17,10 @@
   ],
   "scripts": {
     "build": "webpack",
-    "start": "node build/index.js",
     "lint:js": "eslint --ext .js,.jsx,.ts,.tsx .",
     "lint": "npm run lint:js",
     "binary": "pkg .",
-    "test": "npm run integration:prepare && jest",
+    "test": "npm run build && npm run integration:prepare && jest",
     "integration:clean": "rm -rf ./integration-output",
     "integration:build": "npx -y --legacy-peer-deps -- @diplodoc/cli -i ./integration -o ./integration-output --single-page",
     "integration:prepare": "npm run integration:clean && npm run integration:build"

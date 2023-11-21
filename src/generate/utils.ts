@@ -1,21 +1,17 @@
-import {readFileSync} from 'fs';
 import {join} from 'path';
 
 import {SINGLE_PAGE_DATA_FILENAME} from './constants';
 
+// @ts-ignore
+import yfmStyles from '@diplodoc/transform/dist/css/yfm.css';
+// @ts-ignore
+import yfmPrintStyles from '@diplodoc/transform/dist/css/print.css';
+// @ts-ignore
+import yfmPrintJS from '@diplodoc/transform/dist/js/print.js';
+// @ts-ignore
+import yfmJS from '@diplodoc/transform/dist/js/yfm.js';
+
 export function generatePdfStaticMarkup(html: string) {
-    const yfmStylesPath = require.resolve('@diplodoc/transform/dist/css/yfm.css');
-    const yfmStyles = readFileSync(yfmStylesPath, 'utf-8');
-
-    const yfmPrintStylesPath = require.resolve('@diplodoc/transform/dist/css/print.css');
-    const yfmPrintStyles = readFileSync(yfmPrintStylesPath, 'utf-8');
-
-    const yfmPrintJSPath = require.resolve('@diplodoc/transform/dist/js/print.js');
-    const yfmPrintJS = readFileSync(yfmPrintJSPath, 'utf-8');
-
-    const yfmJSPath = require.resolve('@diplodoc/transform/dist/js/yfm.js');
-    const yfmJS = readFileSync(yfmJSPath, 'utf-8');
-
     return `
 <!doctype html>
 <html>
