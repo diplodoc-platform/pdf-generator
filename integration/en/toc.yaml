@@ -1,13 +1,15 @@
 items:
-  - title: Common
+  - name: Common
     href: index.md
-  - title: Cut
+  - name: Cut
     href: cut.md
-  - title: Tab
+  - name: Tab
     href: tabs.md
-  - title: Table
+  - name: Table
     href: table.md
-  - title: Note
+  - name: Note
     href: note.md
-  - title: Code
+  - name: Code
     href: code.md
+  - name: Terms
+    href: terms.md

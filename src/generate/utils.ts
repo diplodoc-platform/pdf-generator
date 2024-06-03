@@ -22,7 +22,7 @@ export function generatePdfStaticMarkup(html: string) {
         ${yfmPrintStyles}
     </style>
     <style>
-        .yfm {
+        body.yfm {
             margin: 0 auto;
             min-width: 200px;
             max-width: 980px;

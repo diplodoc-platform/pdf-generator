@@ -3,14 +3,10 @@ import {execSync} from 'child_process';
 
 import {toMatchImageSnapshot} from 'jest-image-snapshot';
 import {fromPath} from 'pdf2pic';
-import puppeteer from 'puppeteer';
-import {Browser} from 'puppeteer-core';
 
 expect.extend({toMatchImageSnapshot});
 
 describe('integration', () => {
-    let browser: Browser;
-
     const pdfFile = resolve(__dirname, '../integration-output/en/single-page.pdf');
     const options = {
         density: 100,
@@ -19,12 +15,9 @@ describe('integration', () => {
         height: 1123,
     };
     const convertPdf2Pic = fromPath(pdfFile, options);
-    const numberOfPages = 7;
+    const numberOfPages = 8;
 
     beforeAll(async () => {
-        // @ts-ignore
-        browser = await puppeteer.launch({headless: true});
-
         execSync('node build/cmd/index.js -i integration-output');
     });
 
@@ -35,17 +28,10 @@ describe('integration', () => {
             });
 
             expect(expectedImage).toMatchImageSnapshot({
-                failureThreshold: 0.1,
+                updatePassedSnapshot: true,
+                failureThreshold: 0.05,
                 failureThresholdType: 'percent',
             });
         }
-    });
-
-    afterAll(async () => {
-        if (!browser) {
-            return;
-        }
-
-        await browser.close();
     });
 });
