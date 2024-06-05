@@ -26,7 +26,7 @@
     "integration:prepare": "npm run integration:clean && npm run integration:build"
   },
   "dependencies": {
-    "@diplodoc/transform": "^4.2.0",
+    "@diplodoc/transform": "^4.18.0",
     "async": "^3.2.4",
     "puppeteer-chromium-resolver": "^19.1.0",
     "puppeteer-core": "^19.5.2",
