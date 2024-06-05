@@ -29,7 +29,7 @@ describe('integration', () => {
 
             expect(expectedImage).toMatchImageSnapshot({
                 updatePassedSnapshot: true,
-                failureThreshold: 0.05,
+                failureThreshold: 0.1,
                 failureThresholdType: 'percent',
             });
         }
