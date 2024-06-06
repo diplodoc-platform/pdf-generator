@@ -1,14 +1,14 @@
 {
-  "name": "@diplodoc/docs2pdf",
+  "name": "@diplodoc/pdf-generator",
   "version": "0.1.0",
   "description": "Package to turn Diplodoc projects into PDFs",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/diplodoc-platform/docs2pdf"
+    "url": "https://github.com/diplodoc-platform/pdf-generator"
   },
   "bin": {
-    "docs2pdf": "build/cmd/index.js"
+    "pdf-generator": "build/cmd/index.js"
   },
   "main": "build/index.js",
   "files": [
