@@ -56,7 +56,7 @@ function builder<T>(argv: Argv<T>) {
                 'Syntax: https://en.wikipedia.org/wiki/Glob_(programming)#Syntax',
             type: 'array',
         })
-        .example('docs2pdf -i ./input', '')
+        .example('pdf-generator -i ./input', '')
         .demandOption(['input'], 'Please provide input argument to work with this tool');
 }
 

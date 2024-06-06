@@ -1,11 +1,11 @@
-# docs2pdf
+# pdf-generator
 
 Package to turn Diplodoc projects into PDFs.
 
 ## Installation
 
 ```
-npm i -g @diplodoc/docs2pdf
+npm i -g @diplodoc/pdf-generator
 ```
 
 ## Usage
@@ -20,10 +20,10 @@ npx -- @diplodoc/cli@latest -i ./docs -o ./docs-output --single-page
 
 ### Step 2: Convert Single Page Files to PDFs
 
-Run the `@diplodoc/docs2pdf` command. This will create PDF files right next to the single page ones.
+Run the `@diplodoc/pdf-generator` command. This will create PDF files right next to the single page ones.
 
 ```
-npx -- @diplodoc/docs2pdf@latest -i ./docs-output
+npx -- @diplodoc/pdf-generator@latest -i ./docs-output
 ```
 
 ## Development
