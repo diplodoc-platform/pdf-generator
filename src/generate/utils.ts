@@ -11,12 +11,13 @@ import yfmPrintJS from '@diplodoc/transform/dist/js/print.js';
 // @ts-ignore
 import yfmJS from '@diplodoc/transform/dist/js/yfm.js';
 
-export function generatePdfStaticMarkup(html: string) {
+export function generatePdfStaticMarkup(options: any) {
     return `
 <!doctype html>
 <html>
 <head>
     <meta charset="UTF-8"/>
+    <base href="${options.router.base ?? '.'}"/>
     <style>
         ${yfmStyles}
         ${yfmPrintStyles}
@@ -31,7 +32,7 @@ export function generatePdfStaticMarkup(html: string) {
     </style>
 </head>
 <body class="yfm pdf">
-    ${html}
+    ${options.data.html}
     <script>
         ${yfmJS}
     </script>
