@@ -1,5 +1,5 @@
-import {resolve} from 'path';
 import {execSync} from 'child_process';
+import {resolve} from 'path';
 
 import {toMatchImageSnapshot} from 'jest-image-snapshot';
 import {fromPath} from 'pdf2pic';
@@ -21,8 +21,8 @@ describe('integration', () => {
         execSync('node build/cmd/index.js -i integration-output');
     });
 
-    it('works', async () => {
-        for (let currentPage = 1; currentPage <= numberOfPages; currentPage++) {
+    for (let currentPage = 1; currentPage <= numberOfPages; currentPage++) {
+        it(`works on page ${currentPage}`, async () => {
             const {buffer: expectedImage} = await convertPdf2Pic(currentPage, {
                 responseType: 'buffer',
             });
@@ -32,6 +32,6 @@ describe('integration', () => {
                 failureThreshold: 0.1,
                 failureThresholdType: 'percent',
             });
-        }
-    });
+        });
+    }
 });

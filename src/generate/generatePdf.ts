@@ -25,7 +25,7 @@ async function generatePdf({
     /* Create PDF source file content from single page data */
     const singlePageData = readFileSync(singlePagePath, 'utf8');
     const parsedSinglePageData = JSON.parse(singlePageData);
-    const pdfFileContent = await generatePdfStaticMarkup(parsedSinglePageData.data.html);
+    const pdfFileContent = generatePdfStaticMarkup(parsedSinglePageData);
 
     /* Save PDF source file */
     const pdfDirPath = dirname(singlePagePath);
@@ -44,6 +44,7 @@ async function generatePdf({
 
         await page.pdf({
             path: fullPdfFilePath,
+            printBackground: true,
             ...PUPPETEER_PAGE_OPTIONS,
         });
 

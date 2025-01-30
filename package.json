@@ -22,11 +22,11 @@
     "binary": "pkg .",
     "test": "npm run build && npm run integration:prepare && jest",
     "integration:clean": "rm -rf ./integration-output",
-    "integration:build": "npx -y --legacy-peer-deps -- @diplodoc/cli -i ./integration -o ./integration-output --single-page",
+    "integration:build": "npx -y --legacy-peer-deps -- @diplodoc/cli@4.53.2 -i ./integration -o ./integration-output --single-page",
     "integration:prepare": "npm run integration:clean && npm run integration:build"
   },
   "dependencies": {
-    "@diplodoc/transform": "^4.18.0",
+    "@diplodoc/transform": "^4.44.1",
     "async": "^3.2.4",
     "puppeteer-chromium-resolver": "^19.1.0",
     "puppeteer-core": "^19.5.2",
