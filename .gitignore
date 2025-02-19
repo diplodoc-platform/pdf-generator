@@ -1,5 +1,5 @@
-build
-bin
+build/
+dist-bin/
 
 # libraries
 npm-debug.log

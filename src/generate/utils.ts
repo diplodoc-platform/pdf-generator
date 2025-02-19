@@ -1,15 +1,15 @@
 import {join} from 'path';
 
-import {SINGLE_PAGE_DATA_FILENAME} from './constants';
-
-// @ts-ignore
-import yfmStyles from '@diplodoc/transform/dist/css/yfm.css';
 // @ts-ignore
 import yfmPrintStyles from '@diplodoc/transform/dist/css/print.css';
+// @ts-ignore
+import yfmStyles from '@diplodoc/transform/dist/css/yfm.css';
 // @ts-ignore
 import yfmPrintJS from '@diplodoc/transform/dist/js/print.js';
 // @ts-ignore
 import yfmJS from '@diplodoc/transform/dist/js/yfm.js';
+
+import {SINGLE_PAGE_DATA_FILENAME} from './constants';
 
 export function generatePdfStaticMarkup(options: any) {
     return `
@@ -17,6 +17,7 @@ export function generatePdfStaticMarkup(options: any) {
 <html>
 <head>
     <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Security-Policy" content="frame-src 'none'">
     <base href="${options.router.base ?? '.'}"/>
     <style>
         ${yfmStyles}
