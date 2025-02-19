@@ -9,6 +9,7 @@ import {generatePdfStaticMarkup} from './utils';
 export interface GeneratePDFOptions {
     singlePagePath: string;
     browser: Browser;
+    injectPlatformAgnosticFonts?: boolean;
 }
 
 export interface GeneratePDFResult {
@@ -19,13 +20,18 @@ export interface GeneratePDFResult {
 async function generatePdf({
     singlePagePath,
     browser,
+    injectPlatformAgnosticFonts,
 }: GeneratePDFOptions): Promise<GeneratePDFResult> {
     const result: GeneratePDFResult = {status: Status.SUCCESS};
 
     /* Create PDF source file content from single page data */
     const singlePageData = readFileSync(singlePagePath, 'utf8');
     const parsedSinglePageData = JSON.parse(singlePageData);
-    const pdfFileContent = generatePdfStaticMarkup(parsedSinglePageData);
+    const pdfFileContent = generatePdfStaticMarkup({
+        html: parsedSinglePageData.data.html ?? '',
+        base: parsedSinglePageData.router.base,
+        injectPlatformAgnosticFonts,
+    });
 
     /* Save PDF source file */
     const pdfDirPath = dirname(singlePagePath);

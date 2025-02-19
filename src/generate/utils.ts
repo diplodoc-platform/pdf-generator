@@ -11,14 +11,49 @@ import yfmJS from '@diplodoc/transform/dist/js/yfm.js';
 
 import {SINGLE_PAGE_DATA_FILENAME} from './constants';
 
-export function generatePdfStaticMarkup(options: any) {
+const FontsInjection = `
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono&family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+`.trim();
+
+const FontsOverride = `
+    <style>
+        body.yfm {
+            font-family: 'Inter' !important;
+            font-weight: 400 !important;
+        }
+
+        body.yfm code {
+            font-family: 'Atkinson Hyperlegible Mono' !important;
+            font-weight: 400 !important;
+        }
+
+        * {
+            text-rendering: geometricprecision !important;
+        }
+    </style>
+`.trim();
+
+type MarkupGeneratorOptions = {
+    html: string;
+    base?: string;
+    injectPlatformAgnosticFonts?: boolean;
+};
+
+export function generatePdfStaticMarkup({
+    html,
+    base,
+    injectPlatformAgnosticFonts,
+}: MarkupGeneratorOptions) {
     return `
 <!doctype html>
 <html>
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="Content-Security-Policy" content="frame-src 'none'">
-    <base href="${options.router.base ?? '.'}"/>
+    <base href="${base ?? '.'}"/>
+${injectPlatformAgnosticFonts ? FontsInjection : ''}  
     <style>
         ${yfmStyles}
         ${yfmPrintStyles}
@@ -31,9 +66,10 @@ export function generatePdfStaticMarkup(options: any) {
             padding: 45px;
         }
     </style>
+${injectPlatformAgnosticFonts ? FontsOverride : ''}
 </head>
 <body class="yfm pdf">
-    ${options.data.html}
+    ${html}
     <script>
         ${yfmJS}
     </script>
