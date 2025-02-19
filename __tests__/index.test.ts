@@ -18,7 +18,7 @@ describe('integration', () => {
     const numberOfPages = 9;
 
     beforeAll(async () => {
-        execSync('node build/cmd/index.js -i integration-output');
+        execSync('node build/cmd/index.js -i integration-output --inject-platform-agnostic-fonts');
     });
 
     for (let currentPage = 1; currentPage <= numberOfPages; currentPage++) {
