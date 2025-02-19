@@ -44,7 +44,6 @@ async function generatePdf({
 
         await page.pdf({
             path: fullPdfFilePath,
-            printBackground: true,
             ...PUPPETEER_PAGE_OPTIONS,
         });
 
@@ -55,7 +54,8 @@ async function generatePdf({
         result.status = Status.FAIL;
         result.error = error;
 
-        console.error(`Failed to create PDF file. Tried to generate from ${singlePagePath}.`);
+        console.error(`${singlePagePath}: encountered an error while generating PDF.`);
+        console.error(error);
     }
 
     return result;
