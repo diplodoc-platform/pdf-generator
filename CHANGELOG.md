@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/diplodoc-platform/pdf-generator/compare/v1.0.0...v1.0.1) (2025-02-20)
+
+
+### Bug Fixes
+
+* disable iframe content by default for pdf print runs ([42376b4](https://github.com/diplodoc-platform/pdf-generator/commit/42376b4b274efbe31a451050472bd72a0c0757a6))
+* use platform agnostic fonts for integration tests ([4ad68c0](https://github.com/diplodoc-platform/pdf-generator/commit/4ad68c02c37a37baff97175f59bc304f957952ed))
+
 ## 1.0.0 (2025-01-30)
 
 
