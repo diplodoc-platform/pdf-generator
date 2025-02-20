@@ -1,6 +1,6 @@
 {
   "name": "@diplodoc/pdf-generator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Package to turn Diplodoc projects into PDFs",
   "license": "MIT",
   "repository": {
