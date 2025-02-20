@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/diplodoc-platform/pdf-generator/compare/v1.0.1...v1.0.2) (2025-02-20)
+
+
+### Bug Fixes
+
+* restore broken build before publish capabilities ([4f7e18d](https://github.com/diplodoc-platform/pdf-generator/commit/4f7e18dab0cd027bc1deb257b5224b833ac9be83))
+
 ## [1.0.1](https://github.com/diplodoc-platform/pdf-generator/compare/v1.0.0...v1.0.1) (2025-02-20)
 
 
