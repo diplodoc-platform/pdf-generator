@@ -51,6 +51,7 @@ async function generatePdf({
         await page.pdf({
             path: fullPdfFilePath,
             ...PUPPETEER_PAGE_OPTIONS,
+            timeout: 0,
         });
 
         await page.close();
