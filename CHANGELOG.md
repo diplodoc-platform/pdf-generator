@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.4](https://github.com/diplodoc-platform/pdf-generator/compare/v1.0.3...v1.0.4) (2025-03-25)
+
+
+### Bug Fixes
+
+* increase pdf generation timeouts ([0642816](https://github.com/diplodoc-platform/pdf-generator/commit/0642816bc0ba98bb70f7e09810dbaab1884a4b2f))
+* pin cli ([bccfc78](https://github.com/diplodoc-platform/pdf-generator/commit/bccfc78edecb80bf040247a21c8f3f72f33b1408))
+
 ## [1.0.3](https://github.com/diplodoc-platform/pdf-generator/compare/v1.0.2...v1.0.3) (2025-02-28)
 
 
