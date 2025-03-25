@@ -90,6 +90,7 @@ async function launchBrowser() {
 
     return await stats.puppeteer.launch({
         ...PUPPETEER_BROWSER_LAUNCH_OPTIONS,
+        protocolTimeout: 600_000,
         executablePath: stats.executablePath,
     });
 }
