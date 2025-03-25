@@ -44,6 +44,7 @@ async function generatePdf({
 
         await page.goto(`file://${pdfFileSourcePath}`, {
             waitUntil: 'networkidle2',
+            timeout: 0,
         });
 
         const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME);
