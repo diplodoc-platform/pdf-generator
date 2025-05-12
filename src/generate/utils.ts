@@ -79,6 +79,25 @@ ${injectPlatformAgnosticFonts ? FontsOverride : ''}
 </body>
 </html>
     `.trim();
+    
+//     return `
+// <!doctype html>
+// <html>
+// <head>
+//   <meta charset="UTF-8">
+//   <style>
+//     body { font-family: Arial; padding: 20px; }
+//   </style>
+// </head>
+// <body>
+//   <h1>Документ с нумерацией страниц</h1>
+//   <p>Это тестовый PDF, созданный через Puppeteer.</p>
+//   <!-- Контент, который займёт несколько страниц -->
+//   <div style="page-break-after: always;"></div>
+//   <p>Вторая страница</p>
+// </body>
+// </html>
+//     `.trim()
 }
 
 export function prepareGlobs(items: string[]) {
