@@ -14,9 +14,10 @@ jobs:
       - run: sudo apt-get update
       - run: sudo apt-get install ghostscript
       - run: sudo apt-get install graphicsmagick
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm ci
+          node-version: '18.x'
+          cache: 'npm'      
+      - run: npm ci --verbose
       - run: npm run test
+      
