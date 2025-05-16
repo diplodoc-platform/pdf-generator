@@ -15,7 +15,7 @@ describe('integration', () => {
         height: 1123,
     };
     const convertPdf2Pic = fromPath(pdfFile, options);
-    const numberOfPages = 9;
+    const numberOfPages = 11;
 
     beforeAll(async () => {
         execSync('node build/cmd/index.js -i integration-output --inject-platform-agnostic-fonts');
