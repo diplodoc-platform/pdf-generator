@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.5](https://github.com/diplodoc-platform/pdf-generator/compare/v1.0.4...v1.0.5) (2025-05-16)
+
+
+### Bug Fixes
+
+* add font, update transform ([bdbd17c](https://github.com/diplodoc-platform/pdf-generator/commit/bdbd17ccc2ace9340c9d3c9f0e4aac2bb2cc7ee7))
+
 ## [1.0.4](https://github.com/diplodoc-platform/pdf-generator/compare/v1.0.3...v1.0.4) (2025-03-25)
 
 
