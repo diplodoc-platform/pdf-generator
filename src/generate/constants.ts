@@ -4,6 +4,7 @@ export const PUPPETEER_PAGE_OPTIONS = {
     format: 'a4' as PaperFormat,
     printBackground: true,
     margin: {top: '40px', bottom: '40px'},
+    displayHeaderFooter: true,
 };
 
 export const PDF_FILENAME = 'single-page.pdf';
