@@ -9,18 +9,6 @@ const moduleRules = {
             use: ['babel-loader'],
             exclude: /node_modules/,
         },
-        // {
-        //     test: [/\.css$/, /\.js$/],
-        //     use: 'raw-loader',
-        //     include: [
-        //         resolve('./node_modules/@diplodoc/transform/dist/css/yfm.css'),
-        //         resolve('./node_modules/@diplodoc/transform/dist/js/yfm.js'),
-        //         resolve('./node_modules/@diplodoc/transform/dist/js/print.js'),
-        //         resolve('./node_modules/@diplodoc/transform/dist/css/print.css'),
-        //     ],
-        // },
-
-
         {
             test: /\.css$/,
             use: 'raw-loader',
@@ -33,12 +21,6 @@ const moduleRules = {
                 resolve('./node_modules/@diplodoc/transform/dist/js/print.js'),
             ],
         },
-
-
-        // {
-        //     test: /\.css$/,
-        //     use: ['style-loader', 'css-loader'],
-        // }
     ],
 };
 
