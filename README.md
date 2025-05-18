@@ -26,6 +26,20 @@ Run the `@diplodoc/pdf-generator` command. This will create PDF files right next
 npx -- @diplodoc/pdf-generator@latest -i ./docs-output
 ```
 
+The tool also provide users with flexible configuration of headers and footers in HTML format.
+
+The utility also provides users with flexible customization of headers and footers in the form of HTML format files, the paths to which can be passed through the corresponding options --custom-header and --custom-footer.
+
+By default, the header is not set, but the page numbering in the lower right corner is set in the footer, as shown in the example below.
+
+```
+npx -- @diplodoc/pdf-generator@latest -i ./docs-output
+```
+
+[!default example](https://github.com/diplodoc-platform/pdf-generator/blob/master/images/default_header_footer_example.png)
+
+Also below is an example of a command with custom header ([example-custom-header.html](https://github.com/ggerlakh/pdf-generator/blob/master/example-custom-header.html)) and custom footer ([example-custom-footer.html](https://github.com/ggerlakh/pdf-generator/blob/master/example-custom-footer.html)).
+
 ## Development
 
 ### Prerequisites
