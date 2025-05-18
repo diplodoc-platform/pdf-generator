@@ -3,7 +3,7 @@ import {dirname, join} from 'path';
 
 import {Browser} from 'puppeteer-core';
 
-import {PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status} from './constants';
+import {PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status, DEFAULT_HTML_FOOTER_VALUE} from './constants';
 import {generatePdfStaticMarkup} from './utils';
 
 export interface GeneratePDFOptions {
@@ -55,8 +55,10 @@ async function generatePdf({
         const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME);
 
         /* PDF header/footer configuration */
-        const headerTemplateVal = customHeader !== "" ? readFileSync(customHeader as PathOrFileDescriptor, 'utf8') : " ";
-        const footerTemplateVal = customFooter !== "" ? readFileSync(customFooter as PathOrFileDescriptor, 'utf8') : `<div style="font-size:10px; width:100%; text-align:right; padding-right:20px; margin:0 auto;"><span class="pageNumber"></span></div>`;
+        const headerTemplateVal = customHeader ? 
+          readFileSync(customHeader as PathOrFileDescriptor, 'utf8') : "";
+        const footerTemplateVal = customFooter ? 
+          readFileSync(customFooter as PathOrFileDescriptor, 'utf8') : DEFAULT_HTML_FOOTER_VALUE;
 
         await page.pdf({
             path: fullPdfFilePath,

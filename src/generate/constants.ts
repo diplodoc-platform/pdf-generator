@@ -10,6 +10,7 @@ export const PUPPETEER_PAGE_OPTIONS = {
 export const PDF_FILENAME = 'single-page.pdf';
 export const PDF_SOURCE_FILENAME = 'pdf-source.html';
 export const SINGLE_PAGE_DATA_FILENAME = 'single-page.json';
+export const DEFAULT_HTML_FOOTER_VALUE = `<div style="font-size:10px; width:100%; text-align:right; padding-right:20px; margin:0 auto;"><span class="pageNumber"></span></div>`;
 
 export enum Status {
     SUCCESS,
