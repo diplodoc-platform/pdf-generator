@@ -21,12 +21,12 @@ const FontsInjection = `
 const FontsOverride = `
     <style>
         body.yfm {
-            font-family: 'Inter' !important;
+            font-family: 'Inter', 'Noto Sans SC', 'Microsoft Yahei', 'SimHei', sans-serif !important;
             font-weight: 400 !important;
         }
 
         body.yfm code {
-            font-family: 'Atkinson Hyperlegible Mono' !important;
+            font-family: 'Atkinson Hyperlegible Mono', 'Noto Sans SC', 'Microsoft Yahei', 'SimHei', monospace !important;
             font-weight: 400 !important;
         }
 
