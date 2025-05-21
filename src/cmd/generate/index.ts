@@ -15,12 +15,16 @@ const handler = async (args: Arguments<any>) => {
     const includeDirs = args['include-dirs'];
     const excludeDirs = args['exclude-dirs'];
     const injectPlatformAgnosticFonts = args['inject-platform-agnostic-fonts'];
+    const customHeader = args['custom-header'];
+    const customFooter = args['custom-footer'];
 
     const status = await generatePdfs({
         inputFolder,
         includeDirs,
         excludeDirs,
         injectPlatformAgnosticFonts,
+        customHeader,
+        customFooter,
     });
 
     switch (status) {
@@ -63,6 +67,18 @@ function builder<T>(argv: Argv<T>) {
             describe:
                 'Inject platform agnostic fonts & font-family override. Recommended setting for tests.',
             type: 'boolean',
+        })
+        .option('custom-header', {
+            describe: 
+                 'Path to HTML file with custom header content for generated PDF pages\n' + 
+                 'Example: --custom-header ./header.html\n',
+            type: 'string',
+        })
+        .option('custom-footer', {
+            describe:
+                'Path to HTML file with custom footer content for generated PDF pages\n' + 
+                'Example: --custom-footer ./footer.html\n',
+            type: 'string',
         })
         .example('pdf-generator -i ./input', '')
         .demandOption(['input'], 'Please provide input argument to work with this tool');
