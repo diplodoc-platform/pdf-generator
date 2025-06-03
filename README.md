@@ -34,15 +34,12 @@ By default, the header is not set, but the page numbering in the lower right cor
 npx -- @diplodoc/pdf-generator@latest -i ./docs-output
 ```
 
-[!default example](https://github.com/diplodoc-platform/pdf-generator/blob/master/images/default_header_footer_example.png)
-
-Also below is an example of a command with custom header ([example-custom-header.html](https://github.com/ggerlakh/pdf-generator/blob/master/example-custom-header.html)) and custom footer ([example-custom-footer.html](https://github.com/ggerlakh/pdf-generator/blob/master/example-custom-footer.html)).
+Also below is an example of a command with custom header ([example-custom-header.html](https://github.com/ggerlakh/pdf-generator/blob/master/example-custom-header.html)) and custom footer ([example-custom-footer.html](https://github.com/ggerlakh/pdf-generator/blob/master/example-custom-footer.html)).  
+Even if you specify a custom footer, the numbering still remains in the lower right corner.
 
 ```
 npx -- @diplodoc/pdf-generator@latest -i ./docs-output --custom-header ./example-custom-header.html --custom-footer ./example-custom-footer.html
 ```
-
-[!custom example](https://github.com/diplodoc-platform/pdf-generator/blob/master/images/default_header_footer_example.png)
 
 ## Development
 

@@ -58,13 +58,15 @@ async function generatePdf({
         const headerTemplateVal = customHeader ? 
           readFileSync(customHeader as PathOrFileDescriptor, 'utf8') : "";
         const footerTemplateVal = customFooter ? 
-          readFileSync(customFooter as PathOrFileDescriptor, 'utf8') : DEFAULT_HTML_FOOTER_VALUE;
+          readFileSync(customFooter as PathOrFileDescriptor, 'utf8') : "";
+
+        const resFooterVal = `<div style="position: relative;width: 100%;height: 0;">` + footerTemplateVal + `<div style="position: absolute;right: 20px;bottom: 0;font-size: 10px;z-index: 0;padding: 0 5px;background: white;"><span class="pageNumber"></span></div></div>`;
 
         await page.pdf({
             path: fullPdfFilePath,
             ...PUPPETEER_PAGE_OPTIONS,
             headerTemplate: headerTemplateVal,
-            footerTemplate: footerTemplateVal,
+            footerTemplate: resFooterVal,
             timeout: 0,
         });
 
