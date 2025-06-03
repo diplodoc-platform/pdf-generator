@@ -41,6 +41,8 @@ Even if you specify a custom footer, the numbering still remains in the lower ri
 npx -- @diplodoc/pdf-generator@latest -i ./docs-output --custom-header ./example-custom-header.html --custom-footer ./example-custom-footer.html
 ```
 
+Examples of generated pdf pages with custom headers and footers are available on screenshots __tests__/__image_snapshots__ /custom-headers-test-ts-integration-works-on-page-*
+
 ## Development
 
 ### Prerequisites
