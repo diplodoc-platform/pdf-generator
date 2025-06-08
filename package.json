@@ -1,6 +1,6 @@
 {
   "name": "@diplodoc/pdf-generator",
-  "version": "1.0.6",
+  "version": "1.0.4",
   "description": "Package to turn Diplodoc projects into PDFs",
   "license": "MIT",
   "repository": {
@@ -22,13 +22,14 @@
     "binary": "pkg .",
     "test": "npm run build && npm run integration:prepare && jest -i",
     "integration:clean": "rm -rf ./integration-output",
-    "integration:build": "npx -y --legacy-peer-deps -- @diplodoc/cli@latest -i ./integration -o ./integration-output --single-page",
+    "integration:build": "npx -y --legacy-peer-deps -- @diplodoc/cli@4.54.1 -i ./integration -o ./integration-output --single-page",
     "integration:prepare": "npm run integration:clean && npm run integration:build",
     "prepublishOnly": "npm run lint && npm run build"
   },
   "dependencies": {
-    "@diplodoc/transform": "^4.57.5",
+    "@diplodoc/transform": "file:../transform",
     "async": "^3.2.4",
+    "pdf-lib": "^1.17.1",
     "puppeteer-chromium-resolver": "^19.1.0",
     "puppeteer-core": "^19.5.2",
     "walk-sync": "^3.0.0",
@@ -55,6 +56,7 @@
     "@typescript-eslint/parser": "^5.44.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "8.2.3",
+    "css-loader": "^6.11.0",
     "eslint": "^8.32.0",
     "jest": "^29.7.0",
     "jest-image-snapshot": "^6.2.0",
@@ -63,7 +65,10 @@
     "prettier": "^2.8.8",
     "puppeteer": "^24.8.2",
     "raw-loader": "^4.0.2",
+    "sass": "^1.80.4",
+    "sass-loader": "^16.0.2",
     "shelljs": "^0.8.5",
+    "style-loader": "^3.3.4",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2",
