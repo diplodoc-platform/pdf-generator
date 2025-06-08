@@ -1,4 +1,4 @@
-import {readFileSync, writeFileSync, PathOrFileDescriptor} from 'fs';
+import {readFileSync, writeFileSync, PathOrFileDescriptor, existsSync} from 'fs';
 import {dirname, join} from 'path';
 
 import {Browser} from 'puppeteer-core';
@@ -54,11 +54,24 @@ async function generatePdf({
 
         const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME);
 
+
         /* PDF header/footer configuration */
-        const headerTemplateVal = customHeader ? 
-          readFileSync(customHeader as PathOrFileDescriptor, 'utf8') : "";
-        const footerTemplateVal = customFooter ? 
-          readFileSync(customFooter as PathOrFileDescriptor, 'utf8') : "";
+        let headerTemplateVal = "";
+        if (customHeader) {
+            if (!existsSync(customHeader)) {
+                throw new Error(`Worker file not found: ${customHeader}`);
+            }
+            headerTemplateVal = readFileSync(customHeader as PathOrFileDescriptor, 'utf8');
+        }
+
+        
+        let footerTemplateVal = "";
+        if (customFooter) {
+            if (!existsSync(customFooter)) {
+                throw new Error(`Worker file not found: ${customFooter}`);
+            }
+            footerTemplateVal = readFileSync(customFooter as PathOrFileDescriptor, 'utf8');
+        }
 
         const resFooterVal = `<div style="position: relative;width: 100%;height: 0;">` + footerTemplateVal + `<div style="position: absolute;right: 20px;bottom: 0;font-size: 10px;z-index: 0;padding: 0 5px;background: white;"><span class="pageNumber"></span></div></div>`;
 
