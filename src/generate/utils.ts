@@ -25,7 +25,7 @@ const FontsOverride = `
         }
 
         body.yfm code {
-            font-family: 'Atkinson Hyperlegible Mono' !important;
+            font-family: 'Atkinson Hyperlegible Mono', 'Noto Sans SC', 'Microsoft Yahei', 'SimHei', monospace !important;
             font-weight: 400 !important;
         }
 
