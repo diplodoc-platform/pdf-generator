@@ -20,7 +20,7 @@ const FontsInjection = `
 const FontsOverride = `
     <style>
         body.yfm {
-            font-family: 'Inter' !important;
+            font-family: 'Inter', 'Noto Sans SC', 'Microsoft Yahei', 'SimHei', sans-serif !important;
             font-weight: 400 !important;
         }
 
@@ -37,14 +37,14 @@ const FontsOverride = `
 
 type MarkupGeneratorOptions = {
     html: string;
-    toc_html: string;
+    tocHtml: string;
     base?: string;
     injectPlatformAgnosticFonts?: boolean;
 };
 
 export function generatePdfStaticMarkup({
     html,
-    toc_html,
+    tocHtml,
     base,
     injectPlatformAgnosticFonts,
 }: MarkupGeneratorOptions) {
@@ -71,7 +71,7 @@ ${injectPlatformAgnosticFonts ? FontsInjection : ''}
 ${injectPlatformAgnosticFonts ? FontsOverride : ''}
 </head>
 <body class="yfm pdf">
-    ${toc_html}
+    ${tocHtml}
     ${html}
     <script>
         ${yfmJS}
