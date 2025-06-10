@@ -4,7 +4,7 @@ import {dirname, join} from 'path';
 import {Browser} from 'puppeteer-core';
 import { PDFDocument, PDFName, PDFDict, PDFArray, PDFHexString, PDFNumber, PDFRef } from 'pdf-lib';
 
-import {PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status, DEFAULT_HTML_FOOTER_VALUE} from './constants';
+import {PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status} from './constants';
 import {generatePdfStaticMarkup} from './utils';
 import {generateTOC, generateTOCHTML, addBookmarksFromTOC, TOCEntry} from './generatePdfTOC';
 
@@ -186,11 +186,7 @@ async function generatePdf({
 
     const pdfFileContent = generatePdfStaticMarkup({
         html: parsedSinglePageData.data.html ?? '',
-<<<<<<< HEAD
         tocHtml: generateTOCHTML(parsedSinglePageTOCData.items),
-=======
-        toc_html: generateTOCHTML(parsedSinglePageTOCData.items),
->>>>>>> 11f352a (feat: add TOC and bookmarks redering suuport)
         base: parsedSinglePageData.router.base,
         injectPlatformAgnosticFonts,
     });
@@ -209,8 +205,6 @@ async function generatePdf({
             waitUntil: 'networkidle2',
             timeout: 0,
         });
-
-<<<<<<< HEAD
 
         const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME);
 
@@ -233,10 +227,6 @@ async function generatePdf({
         }
 
         const resFooterVal = `<div style="position: relative;width: 100%;height: 0;">` + footerTemplateVal + `<div style="position: absolute;right: 20px;bottom: 0;font-size: 10px;z-index: 0;padding: 0 5px;background: white;"><span class="pageNumber"></span></div></div>`;
-=======
-
-        const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME);
->>>>>>> 11f352a (feat: add TOC and bookmarks redering suuport)
 
         /* PDF header/footer configuration */
         let headerTemplateVal = " ";
@@ -261,8 +251,6 @@ async function generatePdf({
         await page.pdf({
             path: fullPdfFilePath,
             ...PUPPETEER_PAGE_OPTIONS,
-            headerTemplate: headerTemplateVal,
-            footerTemplate: resFooterVal,
             timeout: 0,
         });
 
