@@ -29,8 +29,8 @@ async function generatePdfs({
     includeDirs = ['**/'],
     excludeDirs = [],
     injectPlatformAgnosticFonts,
-    customHeader,
-    customFooter,
+    customHeader = '',
+    customFooter = '',
 }: GeneratePDFsOptions): Promise<Status> {
     const globs = prepareGlobs(includeDirs);
     const ignore = prepareGlobs(excludeDirs);
@@ -60,8 +60,6 @@ async function generatePdfs({
         asyncify(async (singlePagePath: string) => {
             const fullSinglePagePath = resolve(inputFolder, singlePagePath);
 
-            customHeader = customHeader ?? "";
-            customFooter = customFooter ?? "";
             const result = await generatePdf({
                 singlePagePath: fullSinglePagePath,
                 browser,
