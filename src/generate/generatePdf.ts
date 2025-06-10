@@ -4,7 +4,7 @@ import {dirname, join} from 'path';
 import {Browser} from 'puppeteer-core';
 import { PDFDocument, PDFName, PDFDict, PDFArray, PDFHexString, PDFNumber, PDFRef } from 'pdf-lib';
 
-import {PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status, DEFAULT_HTML_FOOTER_VALUE} from './constants';
+import {PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status} from './constants';
 import {generatePdfStaticMarkup} from './utils';
 import { string } from 'yargs';
 
@@ -12,8 +12,6 @@ export interface GeneratePDFOptions {
     singlePagePath: string;
     browser: Browser;
     injectPlatformAgnosticFonts?: boolean;
-    customHeader?: string;
-    customFooter?: string;
 }
 
 export interface GeneratePDFResult {
@@ -162,8 +160,6 @@ async function generatePdf({
     singlePagePath,
     browser,
     injectPlatformAgnosticFonts,
-    customHeader, 
-    customFooter,
 }: GeneratePDFOptions): Promise<GeneratePDFResult> {
 
     console.log(`Processing singlePagePath = ${singlePagePath}`)
@@ -186,7 +182,7 @@ async function generatePdf({
 
     const pdfFileContent = generatePdfStaticMarkup({
         html: parsedSinglePageData.data.html ?? '',
-        toc_html: generateTOCHTML(parsedSinglePageTOCData.items),
+        tocHtml: generateTOCHTML(parsedSinglePageTOCData.items),
         base: parsedSinglePageData.router.base,
         injectPlatformAgnosticFonts,
     });
@@ -233,8 +229,6 @@ async function generatePdf({
         await page.pdf({
             path: fullPdfFilePath,
             ...PUPPETEER_PAGE_OPTIONS,
-            headerTemplate: headerTemplateVal,
-            footerTemplate: resFooterVal,
             timeout: 0,
         });
 
