@@ -71,7 +71,9 @@ ${injectPlatformAgnosticFonts ? FontsInjection : ''}
 ${injectPlatformAgnosticFonts ? FontsOverride : ''}
 </head>
 <body class="yfm pdf">
-    ${tocHtml}
+    <nav>
+      ${tocHtml}
+    </nav>
     ${html}
     <script>
         ${yfmJS}

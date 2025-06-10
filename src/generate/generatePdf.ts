@@ -6,7 +6,6 @@ import { PDFDocument, PDFName, PDFDict, PDFArray, PDFHexString, PDFNumber, PDFRe
 
 import {PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status} from './constants';
 import {generatePdfStaticMarkup} from './utils';
-import { string } from 'yargs';
 
 export interface GeneratePDFOptions {
     singlePagePath: string;
@@ -33,7 +32,7 @@ type TOCItem = {
     items?: TOCItem[];
   };
 
-function generateTOC(data: any[]): TOCEntry[] {
+function generateTOC(data: unknown[]): TOCEntry[] {
     let counter = 0;
   
     function walk(items: any[]): TOCEntry[] {
