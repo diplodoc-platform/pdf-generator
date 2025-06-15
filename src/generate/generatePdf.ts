@@ -56,10 +56,9 @@ async function generatePdf({
 
 
         /* PDF header/footer configuration */
-        let headerTemplateVal = "";
-        if (customHeader !== " ") {
-            console.log(`processing customHeader = ${customHeader}`)
-            if (!existsSync(customHeader as PathLike)) {
+        let headerTemplateVal = " ";
+        if (customHeader) {
+            if (!existsSync(customHeader)) {
                 throw new Error(`Worker file not found: ${customHeader}`);
             }
             headerTemplateVal = readFileSync(customHeader as PathOrFileDescriptor, 'utf8');
@@ -68,7 +67,6 @@ async function generatePdf({
         
         let footerTemplateVal = "";
         if (customFooter) {
-            console.log(`processing customFooter = ${customFooter}`)
             if (!existsSync(customFooter)) {
                 throw new Error(`Worker file not found: ${customFooter}`);
             }

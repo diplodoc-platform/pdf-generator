@@ -29,7 +29,7 @@ async function generatePdfs({
     includeDirs = ['**/'],
     excludeDirs = [],
     injectPlatformAgnosticFonts,
-    customHeader = ' ',
+    customHeader = '',
     customFooter = '',
 }: GeneratePDFsOptions): Promise<Status> {
     const globs = prepareGlobs(includeDirs);
