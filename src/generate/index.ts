@@ -20,6 +20,8 @@ export interface GeneratePDFsOptions {
     includeDirs?: string[];
     excludeDirs?: string[];
     injectPlatformAgnosticFonts?: boolean;
+    customHeader?: string;
+    customFooter?: string;
 }
 
 async function generatePdfs({
@@ -27,6 +29,8 @@ async function generatePdfs({
     includeDirs = ['**/'],
     excludeDirs = [],
     injectPlatformAgnosticFonts,
+    customHeader = '',
+    customFooter = '',
 }: GeneratePDFsOptions): Promise<Status> {
     const globs = prepareGlobs(includeDirs);
     const ignore = prepareGlobs(excludeDirs);
@@ -60,6 +64,8 @@ async function generatePdfs({
                 singlePagePath: fullSinglePagePath,
                 browser,
                 injectPlatformAgnosticFonts,
+                customHeader,
+                customFooter,
             });
 
             if (result.status === Status.FAIL) {

@@ -1,15 +1,17 @@
-import {readFileSync, writeFileSync} from 'fs';
+import {readFileSync, writeFileSync, PathOrFileDescriptor, existsSync, PathLike} from 'fs';
 import {dirname, join} from 'path';
 
 import {Browser} from 'puppeteer-core';
 
-import {PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status} from './constants';
+import {PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status, DEFAULT_HTML_FOOTER_VALUE} from './constants';
 import {generatePdfStaticMarkup} from './utils';
 
 export interface GeneratePDFOptions {
     singlePagePath: string;
     browser: Browser;
     injectPlatformAgnosticFonts?: boolean;
+    customHeader?: string;
+    customFooter?: string;
 }
 
 export interface GeneratePDFResult {
@@ -21,6 +23,8 @@ async function generatePdf({
     singlePagePath,
     browser,
     injectPlatformAgnosticFonts,
+    customHeader, 
+    customFooter,
 }: GeneratePDFOptions): Promise<GeneratePDFResult> {
     const result: GeneratePDFResult = {status: Status.SUCCESS};
 
@@ -37,6 +41,7 @@ async function generatePdf({
     const pdfDirPath = dirname(singlePagePath);
     const pdfFileSourcePath = join(pdfDirPath, PDF_SOURCE_FILENAME);
 
+
     writeFileSync(pdfFileSourcePath, pdfFileContent);
 
     try {
@@ -49,9 +54,32 @@ async function generatePdf({
 
         const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME);
 
+
+        /* PDF header/footer configuration */
+        let headerTemplateVal = " ";
+        if (customHeader) {
+            if (!existsSync(customHeader)) {
+                throw new Error(`Worker file not found: ${customHeader}`);
+            }
+            headerTemplateVal = readFileSync(customHeader as PathOrFileDescriptor, 'utf8');
+        }
+
+        
+        let footerTemplateVal = "";
+        if (customFooter) {
+            if (!existsSync(customFooter)) {
+                throw new Error(`Worker file not found: ${customFooter}`);
+            }
+            footerTemplateVal = readFileSync(customFooter as PathOrFileDescriptor, 'utf8');
+        }
+
+        const resFooterVal = `<div style="position: relative;width: 100%;height: 0;">` + footerTemplateVal + `<div style="position: absolute;right: 20px;bottom: 0;font-size: 10px;z-index: 0;padding: 0 5px;background: white;"><span class="pageNumber"></span></div></div>`;
+
         await page.pdf({
             path: fullPdfFilePath,
             ...PUPPETEER_PAGE_OPTIONS,
+            headerTemplate: headerTemplateVal,
+            footerTemplate: resFooterVal,
             timeout: 0,
         });
 
