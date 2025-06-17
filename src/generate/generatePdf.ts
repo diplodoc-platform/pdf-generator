@@ -3,7 +3,7 @@ import {dirname, join} from 'path';
 
 import {Browser} from 'puppeteer-core';
 
-import {PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status} from './constants';
+import {PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status, DEFAULT_HTML_FOOTER_VALUE} from './constants';
 import {generatePdfStaticMarkup} from './utils';
 import {generateTOC, generateTOCHTML, addBookmarksFromTOC, TOCEntry} from './generatePdfTOC';
 
@@ -11,6 +11,8 @@ export interface GeneratePDFOptions {
     singlePagePath: string;
     browser: Browser;
     injectPlatformAgnosticFonts?: boolean;
+    customHeader?: string;
+    customFooter?: string;
 }
 
 export interface GeneratePDFResult {
@@ -22,6 +24,8 @@ async function generatePdf({
     singlePagePath,
     browser,
     injectPlatformAgnosticFonts,
+    customHeader, 
+    customFooter,
 }: GeneratePDFOptions): Promise<GeneratePDFResult> {
 
     console.log(`Processing singlePagePath = ${singlePagePath}`)
@@ -91,6 +95,8 @@ async function generatePdf({
         await page.pdf({
             path: fullPdfFilePath,
             ...PUPPETEER_PAGE_OPTIONS,
+            headerTemplate: headerTemplateVal,
+            footerTemplate: resFooterVal,
             timeout: 0,
         });
 
