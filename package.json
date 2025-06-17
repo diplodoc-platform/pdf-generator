@@ -20,7 +20,7 @@
     "lint:js": "eslint --ext .js,.jsx,.ts,.tsx .",
     "lint": "npm run lint:js",
     "binary": "pkg .",
-    "test": "npm run build && npm run integration:prepare && jest -i --verbose",
+    "test": "npm run build && npm run integration:prepare && jest -i",
     "integration:clean": "rm -rf ./integration-output",
     "integration:build": "npx -y --legacy-peer-deps -- @diplodoc/cli@4.54.1 -i ./integration -o ./integration-output --single-page",
     "integration:prepare": "npm run integration:clean && npm run integration:build",
