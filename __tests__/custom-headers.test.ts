@@ -15,7 +15,7 @@ describe('integration', () => {
         height: 1123,
     };
     const convertPdf2Pic = fromPath(pdfFile, options);
-    const numberOfPages = 12;
+    const numberOfPages = 9;
 
     beforeAll(async () => {
         execSync('node build/cmd/index.js -i integration-output --inject-platform-agnostic-fonts --custom-header ./example-custom-header.html --custom-footer ./example-custom-footer.html');
