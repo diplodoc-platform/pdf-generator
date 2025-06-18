@@ -5,6 +5,7 @@ import {Browser} from 'puppeteer-core';
 
 import {PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status, DEFAULT_HTML_FOOTER_VALUE} from './constants';
 import {generatePdfStaticMarkup} from './utils';
+import {generateTOC, generateTOCHTML, addBookmarksFromTOC, TOCEntry} from './generatePdfTOC';
 
 export interface GeneratePDFOptions {
     singlePagePath: string;
@@ -26,13 +27,28 @@ async function generatePdf({
     customHeader, 
     customFooter,
 }: GeneratePDFOptions): Promise<GeneratePDFResult> {
+
+    console.log(`Processing singlePagePath = ${singlePagePath}`)
+
     const result: GeneratePDFResult = {status: Status.SUCCESS};
 
     /* Create PDF source file content from single page data */
     const singlePageData = readFileSync(singlePagePath, 'utf8');
     const parsedSinglePageData = JSON.parse(singlePageData);
+
+    const singlePageTOCPath = singlePagePath.replace(".json", "-toc.js");
+
+    console.log(`Processing singlePageTOCPath = ${singlePageTOCPath}`)
+
+    const singlePageTOCData = readFileSync(singlePageTOCPath, 'utf8');
+
+    const TOCJSONInput = singlePageTOCData.replace("window.__DATA__.data.toc = ", "").replace(/="h/g, '=\\\\"h').replace(/">/g, '\">').replace(/;$/, "")
+
+    const parsedSinglePageTOCData = JSON.parse(TOCJSONInput)
+
     const pdfFileContent = generatePdfStaticMarkup({
         html: parsedSinglePageData.data.html ?? '',
+        tocHtml: generateTOCHTML(parsedSinglePageTOCData.items),
         base: parsedSinglePageData.router.base,
         injectPlatformAgnosticFonts,
     });
@@ -53,7 +69,6 @@ async function generatePdf({
         });
 
         const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME);
-
 
         /* PDF header/footer configuration */
         let headerTemplateVal = " ";
@@ -86,6 +101,20 @@ async function generatePdf({
         await page.close();
 
         console.log(`Generated PDF file: ${fullPdfFilePath}`);
+
+        
+        /* PDF bookmarks/outline configuration */
+
+        const toc: TOCEntry[] = generateTOC(parsedSinglePageTOCData.items);
+
+        const inputPdf = readFileSync(fullPdfFilePath);
+
+        const outputPdf = await addBookmarksFromTOC(inputPdf, toc);
+        
+        // Write result PDF with bookmarks
+        writeFileSync(fullPdfFilePath, outputPdf);
+        
+
     } catch (error) {
         result.status = Status.FAIL;
         result.error = error;

@@ -15,18 +15,17 @@ const FontsInjection = `
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono&family=Inter:opsz@14..32&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
-    `.trim();
+`.trim();
 
 const FontsOverride = `
     <style>
         body.yfm {
-            font-family: 'Inter', 'Noto Sans SC', 'Microsoft Yahei', 'SimHei', sans-serif !important;
+            font-family: 'Inter' !important;
             font-weight: 400 !important;
         }
 
         body.yfm code {
-            font-family: 'Atkinson Hyperlegible Mono', 'Noto Sans SC', 'Microsoft Yahei', 'SimHei', monospace !important;
+            font-family: 'Atkinson Hyperlegible Mono' !important;
             font-weight: 400 !important;
         }
 
@@ -38,12 +37,14 @@ const FontsOverride = `
 
 type MarkupGeneratorOptions = {
     html: string;
+    tocHtml: string;
     base?: string;
     injectPlatformAgnosticFonts?: boolean;
 };
 
 export function generatePdfStaticMarkup({
     html,
+    tocHtml,
     base,
     injectPlatformAgnosticFonts,
 }: MarkupGeneratorOptions) {
@@ -70,6 +71,9 @@ ${injectPlatformAgnosticFonts ? FontsInjection : ''}
 ${injectPlatformAgnosticFonts ? FontsOverride : ''}
 </head>
 <body class="yfm pdf">
+    <nav>
+      ${tocHtml}
+    </nav>
     ${html}
     <script>
         ${yfmJS}
@@ -80,6 +84,7 @@ ${injectPlatformAgnosticFonts ? FontsOverride : ''}
 </body>
 </html>
     `.trim();
+
 }
 
 export function prepareGlobs(items: string[]) {
