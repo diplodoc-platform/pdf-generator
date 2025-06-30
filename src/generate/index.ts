@@ -76,8 +76,11 @@ async function generatePdfs({
         }),
     );
 
-    if (browser && browser.process() !== null) {
-        browser.process()!.kill('SIGINT');
+    if (browser) {
+        const process = browser.process();
+        if (process !== null) {
+            process.kill('SIGINT');
+        }
         await browser.close();
     }
 

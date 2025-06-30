@@ -84,7 +84,6 @@ ${injectPlatformAgnosticFonts ? FontsOverride : ''}
 </body>
 </html>
     `.trim();
-
 }
 
 export function prepareGlobs(items: string[]) {

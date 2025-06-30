@@ -69,14 +69,14 @@ function builder<T>(argv: Argv<T>) {
             type: 'boolean',
         })
         .option('custom-header', {
-            describe: 
-                 'Path to HTML file with custom header content for generated PDF pages\n' + 
-                 'Example: --custom-header ./header.html\n',
+            describe:
+                'Path to HTML file with custom header content for generated PDF pages\n' +
+                'Example: --custom-header ./header.html\n',
             type: 'string',
         })
         .option('custom-footer', {
             describe:
-                'Path to HTML file with custom footer content for generated PDF pages\n' + 
+                'Path to HTML file with custom footer content for generated PDF pages\n' +
                 'Example: --custom-footer ./footer.html\n',
             type: 'string',
         })

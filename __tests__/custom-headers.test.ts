@@ -18,7 +18,9 @@ describe('integration', () => {
     const numberOfPages = 12;
 
     beforeAll(async () => {
-        execSync('node build/cmd/index.js -i integration-output --inject-platform-agnostic-fonts --custom-header ./example-custom-header.html --custom-footer ./example-custom-footer.html');
+        execSync(
+            'node build/cmd/index.js -i integration-output --inject-platform-agnostic-fonts --custom-header ./example-custom-header.html --custom-footer ./example-custom-footer.html',
+        );
     });
 
     for (let currentPage = 1; currentPage <= numberOfPages; currentPage++) {
