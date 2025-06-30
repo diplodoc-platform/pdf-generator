@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.0](https://github.com/diplodoc-platform/pdf-generator/compare/v1.0.6...v1.1.0) (2025-06-18)
+
+
+### Features
+
+* add --custom-header and --custom-footer options & numbering ([#18](https://github.com/diplodoc-platform/pdf-generator/issues/18)) ([a2496a1](https://github.com/diplodoc-platform/pdf-generator/commit/a2496a1a7a78481f6314f0d87c72d1cb719b7354))
+* add TOC and bookmarks redering support ([#28](https://github.com/diplodoc-platform/pdf-generator/issues/28)) ([1306922](https://github.com/diplodoc-platform/pdf-generator/commit/1306922ed9126d69dc687690afcb664476f4ea4c))
+
+
+### Bug Fixes
+
+* update tests, add font-family ([9b346f8](https://github.com/diplodoc-platform/pdf-generator/commit/9b346f8c9c2aaca22a2b6ae39c53773089c33a84))
+
 ## [1.0.6](https://github.com/diplodoc-platform/pdf-generator/compare/v1.0.5...v1.0.6) (2025-05-16)
 
 
