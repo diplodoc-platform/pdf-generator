@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.0...v1.1.1) (2025-06-30)
+
+
+### Bug Fixes
+
+* lint errors ([5429af7](https://github.com/diplodoc-platform/pdf-generator/commit/5429af701bd01e9757295b52811e1c3af77d1710))
+
 ## [1.1.0](https://github.com/diplodoc-platform/pdf-generator/compare/v1.0.6...v1.1.0) (2025-06-18)
 
 
