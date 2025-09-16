@@ -40,6 +40,7 @@ type MarkupGeneratorOptions = {
     tocHtml: string;
     base?: string;
     injectPlatformAgnosticFonts?: boolean;
+    script: string[];
 };
 
 export function generatePdfStaticMarkup({
@@ -47,6 +48,7 @@ export function generatePdfStaticMarkup({
     tocHtml,
     base,
     injectPlatformAgnosticFonts,
+    script,
 }: MarkupGeneratorOptions) {
     return `
 <!doctype html>
@@ -81,7 +83,16 @@ ${injectPlatformAgnosticFonts ? FontsOverride : ''}
     <script>
         ${yfmPrintJS}
     </script>
-</body>
+    ${script.map((src) => `<script src="${src}"></script>`)}
+    <script>
+        // Initialize mermaid runtime
+        window.mermaidJsonp = window.mermaidJsonp || [];
+        window.mermaidJsonp.push(function(mermaid) {
+            mermaid.initialize({ startOnLoad: false });
+            mermaid.run();
+        });
+    </script>
+    </body>
 </html>
     `.trim();
 }

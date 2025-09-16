@@ -19,3 +19,5 @@ items:
     href: chinese.md
   - name: List
     href: list.md
+  - name: Mermaid
+    href: mermaid.md
