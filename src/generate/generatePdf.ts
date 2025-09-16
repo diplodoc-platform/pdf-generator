@@ -54,6 +54,7 @@ async function generatePdf({
         tocHtml: generateTOCHTML(parsedSinglePageTOCData.items),
         base: parsedSinglePageData.router.base,
         injectPlatformAgnosticFonts,
+        script: parsedSinglePageData.data.meta.script ?? [],
     });
 
     /* Save PDF source file */
