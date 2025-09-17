@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.1...v1.1.2) (2025-09-17)
+
+
+### Bug Fixes
+
+* mermaid ([ad354a7](https://github.com/diplodoc-platform/pdf-generator/commit/ad354a7590c43c34c57cbfb9a90f4e9cd1090e96))
+
 ## [1.1.1](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.0...v1.1.1) (2025-06-30)
 
 
