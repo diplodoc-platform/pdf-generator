@@ -5,7 +5,7 @@ import {Browser} from 'puppeteer-core';
 
 import {PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status} from './constants';
 import {TOCEntry, addBookmarksFromTOC, generateTOC, generateTOCHTML} from './generatePdfTOC';
-import {generatePdfStaticMarkup} from './utils';
+import {generatePdfStaticMarkup, removeIframesInDetails} from './utils';
 
 export interface GeneratePDFOptions {
     singlePagePath: string;
@@ -70,6 +70,9 @@ async function generatePdf({
             waitUntil: 'networkidle2',
             timeout: 0,
         });
+
+        // Temp solution for iframes within cut
+        await removeIframesInDetails(page);
 
         const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME);
 
