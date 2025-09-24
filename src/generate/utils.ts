@@ -9,7 +9,9 @@ import yfmPrintJS from '@diplodoc/transform/dist/js/print.js';
 // @ts-ignore
 import yfmJS from '@diplodoc/transform/dist/js/yfm.js';
 
-import {SINGLE_PAGE_DATA_FILENAME} from './constants';
+import {PDF_DIRENAME, PDF_PAGE_DATA_FILENAME, SINGLE_PAGE_DATA_FILENAME} from './constants';
+
+import type {Page} from 'puppeteer-core';
 
 const FontsInjection = `
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -83,7 +85,7 @@ ${injectPlatformAgnosticFonts ? FontsOverride : ''}
     <script>
         ${yfmPrintJS}
     </script>
-    ${script.map((src) => `<script src="${src}"></script>`)}
+    ${script.map((src) => `<script src="${src}"></script>`).join('')}
     <script>
         // Initialize mermaid runtime
         window.mermaidJsonp = window.mermaidJsonp || [];
@@ -97,6 +99,48 @@ ${injectPlatformAgnosticFonts ? FontsOverride : ''}
     `.trim();
 }
 
-export function prepareGlobs(items: string[]) {
-    return items.map((item) => join(item, SINGLE_PAGE_DATA_FILENAME));
+export function prepareGlobs(items: string[]) {    
+    return items.flatMap(item => [
+        join(item, `${PDF_DIRENAME}/${PDF_PAGE_DATA_FILENAME}`),
+        join(item, PDF_PAGE_DATA_FILENAME),
+        join(item, SINGLE_PAGE_DATA_FILENAME),
+    ]);
+}
+
+export async function removeIframesInDetails(page: Page): Promise<void> {
+    const iframeCount = await page.evaluate(() => {
+        const iframes = document.querySelectorAll('iframe');
+        return iframes.length;
+    });
+    
+    if (iframeCount === 0) {
+        return;
+    }
+    
+    await page.evaluate(() => {
+        const iframes = document.querySelectorAll('iframe');
+        let removedCount = 0;
+        
+        iframes.forEach(iframe => {
+            let currentElement: Element = iframe;
+            let level = 0;
+            const maxLevel = 5;
+            
+            while (currentElement && level < maxLevel) {
+                const parentElement = currentElement.parentElement;
+                if (!parentElement) break;
+                
+                if (parentElement.tagName.toLowerCase() === 'details') {
+                    if (parentElement.parentNode) {
+                        parentElement.parentNode.removeChild(parentElement);
+                        removedCount++;
+                    }
+                    break;
+                }
+                
+                currentElement = parentElement;
+                level++;
+            }
+        });
+    });
 }

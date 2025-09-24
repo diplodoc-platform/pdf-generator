@@ -3,9 +3,9 @@ import {dirname, join} from 'path';
 
 import {Browser} from 'puppeteer-core';
 
-import {PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status} from './constants';
+import {PDF_DIRENAME, PDF_FILENAME, PDF_SOURCE_FILENAME, PUPPETEER_PAGE_OPTIONS, Status} from './constants';
 import {TOCEntry, addBookmarksFromTOC, generateTOC, generateTOCHTML} from './generatePdfTOC';
-import {generatePdfStaticMarkup} from './utils';
+import {generatePdfStaticMarkup, removeIframesInDetails} from './utils';
 
 export interface GeneratePDFOptions {
     singlePagePath: string;
@@ -71,7 +71,12 @@ async function generatePdf({
             timeout: 0,
         });
 
-        const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME);
+
+        // Temp solution for iframes within cut
+        await removeIframesInDetails(page);
+
+        const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME)
+            .replace(`/${PDF_DIRENAME}/`, '/');;
 
         /* PDF header/footer configuration */
         let headerTemplateVal = ' ';
