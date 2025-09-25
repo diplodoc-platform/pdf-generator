@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.2...v1.1.3) (2025-09-25)
+
+
+### Bug Fixes
+
+* cut visual bugs with iframe ([7c25a89](https://github.com/diplodoc-platform/pdf-generator/commit/7c25a8938eb857adf9a0bfe1009d1a62f7a91451))
+
 ## [1.1.2](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.1...v1.1.2) (2025-09-17)
 
 
