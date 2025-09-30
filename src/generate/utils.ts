@@ -13,6 +13,8 @@ import {PDF_DIRENAME, PDF_PAGE_DATA_FILENAME, SINGLE_PAGE_DATA_FILENAME} from '.
 
 import type {Page} from 'puppeteer-core';
 
+import type {Page} from 'puppeteer-core';
+
 const FontsInjection = `
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -144,3 +146,42 @@ export async function removeIframesInDetails(page: Page): Promise<void> {
         });
     });
 }
+
+export async function removeIframesInDetails(page: Page): Promise<void> {
+    const iframeCount = await page.evaluate(() => {
+        const iframes = document.querySelectorAll('iframe');
+        return iframes.length;
+    });
+    
+    if (iframeCount === 0) {
+        return;
+    }
+    
+    await page.evaluate(() => {
+        const iframes = document.querySelectorAll('iframe');
+        let removedCount = 0;
+        
+        iframes.forEach(iframe => {
+            let currentElement: Element = iframe;
+            let level = 0;
+            const maxLevel = 5;
+            
+            while (currentElement && level < maxLevel) {
+                const parentElement = currentElement.parentElement;
+                if (!parentElement) break;
+                
+                if (parentElement.tagName.toLowerCase() === 'details') {
+                    if (parentElement.parentNode) {
+                        parentElement.parentNode.removeChild(parentElement);
+                        removedCount++;
+                    }
+                    break;
+                }
+                
+                currentElement = parentElement;
+                level++;
+            }
+        });
+    });
+}
+
