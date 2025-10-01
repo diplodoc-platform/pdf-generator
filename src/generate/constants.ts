@@ -10,7 +10,7 @@ export const PUPPETEER_PAGE_OPTIONS = {
 export const PDF_DIRENAME = 'pdf';
 export const PDF_FILENAME = 'single-page.pdf';
 export const PDF_SOURCE_FILENAME = 'pdf-source.html';
-export const PDF_PAGE_DATA_FILENAME = 'pdf-page.json';
+export const PDF_PAGE_DATA_FILENAME = `${PDF_DIRENAME}/pdf-page.json`;
 export const SINGLE_PAGE_DATA_FILENAME = 'single-page.json';
 
 export enum Status {

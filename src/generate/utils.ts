@@ -9,7 +9,7 @@ import yfmPrintJS from '@diplodoc/transform/dist/js/print.js';
 // @ts-ignore
 import yfmJS from '@diplodoc/transform/dist/js/yfm.js';
 
-import {PDF_DIRENAME, PDF_PAGE_DATA_FILENAME, SINGLE_PAGE_DATA_FILENAME} from './constants';
+import {PDF_PAGE_DATA_FILENAME, SINGLE_PAGE_DATA_FILENAME} from './constants';
 
 import type {Page} from 'puppeteer-core';
 
@@ -99,9 +99,19 @@ ${injectPlatformAgnosticFonts ? FontsOverride : ''}
     `.trim();
 }
 
+export function filterPaths(paths: string[]): string[] {
+    const hasPdf = paths.some(p => p.endsWith(PDF_PAGE_DATA_FILENAME));
+
+    if (hasPdf) {
+        return paths.filter(p => p.endsWith(PDF_PAGE_DATA_FILENAME));
+    }
+
+    return paths.filter(p => p.endsWith(SINGLE_PAGE_DATA_FILENAME));
+}
+
 export function prepareGlobs(items: string[]) {    
     return items.flatMap(item => [
-        join(item, `${PDF_DIRENAME}/${PDF_PAGE_DATA_FILENAME}`),
+        join(item, PDF_PAGE_DATA_FILENAME),
         join(item, SINGLE_PAGE_DATA_FILENAME),
     ]);
 }

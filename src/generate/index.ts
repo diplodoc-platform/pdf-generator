@@ -13,7 +13,7 @@ import {
     Status,
 } from './constants';
 import {generatePdf} from './generatePdf';
-import {prepareGlobs} from './utils';
+import {filterPaths, prepareGlobs} from './utils';
 
 export interface GeneratePDFsOptions {
     inputFolder: string;
@@ -42,6 +42,8 @@ async function generatePdfs({
         ignore,
     });
 
+    const filteredPaths = filterPaths(singlePagePaths);
+
     let browser: Browser;
     try {
         browser = await launchBrowser();
@@ -55,10 +57,13 @@ async function generatePdfs({
     let countFailedPdfs = 0;
 
     await mapLimit(
-        singlePagePaths,
+        filteredPaths,
         PUPPETEER_PROCESS_LIMIT,
         asyncify(async (singlePagePath: string) => {
             const fullSinglePagePath = resolve(inputFolder, singlePagePath);
+
+            console.log('qwerty')
+            console.log(fullSinglePagePath)
 
             const result = await generatePdf({
                 singlePagePath: fullSinglePagePath,
