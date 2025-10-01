@@ -62,9 +62,6 @@ async function generatePdfs({
         asyncify(async (singlePagePath: string) => {
             const fullSinglePagePath = resolve(inputFolder, singlePagePath);
 
-            console.log('qwerty')
-            console.log(fullSinglePagePath)
-
             const result = await generatePdf({
                 singlePagePath: fullSinglePagePath,
                 browser,
