@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.5](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.4...v1.1.5) (2025-10-01)
+
+
+### Bug Fixes
+
+* fixed linter ([65c3c89](https://github.com/diplodoc-platform/pdf-generator/commit/65c3c89e3f75849223b22eff05afa79e92251c6c))
+
 ## [1.1.4](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.3...v1.1.4) (2025-10-01)
 
 
