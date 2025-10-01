@@ -8,10 +8,9 @@ import yfmStyles from '@diplodoc/transform/dist/css/yfm.css';
 import yfmPrintJS from '@diplodoc/transform/dist/js/print.js';
 // @ts-ignore
 import yfmJS from '@diplodoc/transform/dist/js/yfm.js';
+import type {Page} from 'puppeteer-core';
 
 import {PDF_PAGE_DATA_FILENAME, SINGLE_PAGE_DATA_FILENAME} from './constants';
-
-import type {Page} from 'puppeteer-core';
 
 const FontsInjection = `
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -100,17 +99,17 @@ ${injectPlatformAgnosticFonts ? FontsOverride : ''}
 }
 
 export function filterPaths(paths: string[]): string[] {
-    const hasPdf = paths.some(p => p.endsWith(PDF_PAGE_DATA_FILENAME));
+    const hasPdf = paths.some((p) => p.endsWith(PDF_PAGE_DATA_FILENAME));
 
     if (hasPdf) {
-        return paths.filter(p => p.endsWith(PDF_PAGE_DATA_FILENAME));
+        return paths.filter((p) => p.endsWith(PDF_PAGE_DATA_FILENAME));
     }
 
-    return paths.filter(p => p.endsWith(SINGLE_PAGE_DATA_FILENAME));
+    return paths.filter((p) => p.endsWith(SINGLE_PAGE_DATA_FILENAME));
 }
 
-export function prepareGlobs(items: string[]) {    
-    return items.flatMap(item => [
+export function prepareGlobs(items: string[]) {
+    return items.flatMap((item) => [
         join(item, PDF_PAGE_DATA_FILENAME),
         join(item, SINGLE_PAGE_DATA_FILENAME),
     ]);
@@ -121,36 +120,33 @@ export async function removeIframesInDetails(page: Page): Promise<void> {
         const iframes = document.querySelectorAll('iframe');
         return iframes.length;
     });
-    
+
     if (iframeCount === 0) {
         return;
     }
-    
+
     await page.evaluate(() => {
         const iframes = document.querySelectorAll('iframe');
-        let removedCount = 0;
-        
-        iframes.forEach(iframe => {
+
+        iframes.forEach((iframe) => {
             let currentElement: Element = iframe;
             let level = 0;
             const maxLevel = 5;
-            
+
             while (currentElement && level < maxLevel) {
                 const parentElement = currentElement.parentElement;
                 if (!parentElement) break;
-                
+
                 if (parentElement.tagName.toLowerCase() === 'details') {
                     if (parentElement.parentNode) {
                         parentElement.parentNode.removeChild(parentElement);
-                        removedCount++;
                     }
                     break;
                 }
-                
+
                 currentElement = parentElement;
                 level++;
             }
         });
     });
 }
-
