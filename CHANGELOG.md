@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.4](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.3...v1.1.4) (2025-10-01)
+
+
+### Bug Fixes
+
+* filter paths ([000cd20](https://github.com/diplodoc-platform/pdf-generator/commit/000cd20b17be8513d9684dab1e99664d08a04ede))
+* fixes rebase bugs ([bb197aa](https://github.com/diplodoc-platform/pdf-generator/commit/bb197aab5c0b7a49305418a9e146d09b480d2ab5))
+* updated SINGLE_PAGE_DATA_FILENAME ([6ef43e2](https://github.com/diplodoc-platform/pdf-generator/commit/6ef43e27d2cd51de1da6c96375b2ea98265cb8d9))
+
 ## [1.1.3](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.2...v1.1.3) (2025-09-25)
 
 
