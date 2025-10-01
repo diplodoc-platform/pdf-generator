@@ -71,7 +71,6 @@ async function generatePdf({
             timeout: 0,
         });
 
-        // Temp solution for iframes within cut
         await removeIframesInDetails(page);
 
         const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME)
