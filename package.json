@@ -22,7 +22,7 @@
     "binary": "pkg .",
     "test": "npm run build && npm run integration:prepare && jest -i",
     "integration:clean": "rm -rf ./integration-output",
-    "integration:build": "npx -y -- @diplodoc/cli@latest -i ./integration -o ./integration-output --single-page",
+    "integration:build": "npx -y -- @diplodoc/cli@latest -i ./integration -o ./integration-output --pdf",
     "integration:prepare": "npm run integration:clean && npm run integration:build",
     "prepublishOnly": "npm run lint && npm run build"
   },
