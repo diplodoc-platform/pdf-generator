@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.6](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.5...v1.1.6) (2025-10-07)
+
+
+### Bug Fixes
+
+* added --pdf arg ([a6d4180](https://github.com/diplodoc-platform/pdf-generator/commit/a6d4180ef0ef3ff5535b6841a5d19bb3192d4083))
+
 ## [1.1.5](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.4...v1.1.5) (2025-10-01)
 
 
