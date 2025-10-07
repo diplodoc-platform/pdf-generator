@@ -15,7 +15,7 @@ npm i -g @diplodoc/pdf-generator
 Run `@diplodoc/cli` command. This will create an output folder with a single page file for each Table of Contents (ToC) file.
 
 ```
-npx -- @diplodoc/cli@latest -i ./docs -o ./docs-output --single-page
+npx -- @diplodoc/cli@latest -i ./docs -o ./docs-output --pdf
 ```
 
 ### Step 2: Convert Single Page Files to PDFs
