@@ -70,6 +70,18 @@ ${injectPlatformAgnosticFonts ? FontsInjection : ''}
             max-width: 980px;
             padding: 45px;
         }
+        .yfm .yfm-table-container {
+            position: static !important;
+            height: fit-content !important;
+        }
+        .yfm .yfm-table-container > table {
+            transform: scale(0.9) !important;
+            position: static !important;
+        }
+        .yfm .yfm-table-container > table th,
+        .yfm .yfm-table-container > table td {
+            white-space: normal;
+        }
     </style>
 ${injectPlatformAgnosticFonts ? FontsOverride : ''}
 </head>
@@ -84,7 +96,7 @@ ${injectPlatformAgnosticFonts ? FontsOverride : ''}
     <script>
         ${yfmPrintJS}
     </script>
-    ${script.map((src) => `<script src="${src}"></script>`).join('')}
+    ${script.map((src) => `<script src="../${src}"></script>`).join('')}
     <script>
         // Initialize mermaid runtime
         window.mermaidJsonp = window.mermaidJsonp || [];
