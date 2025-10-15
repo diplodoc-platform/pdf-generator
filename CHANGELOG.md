@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.7](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.6...v1.1.7) (2025-10-15)
+
+
+### Bug Fixes
+
+* pdf table layout override ([94c600e](https://github.com/diplodoc-platform/pdf-generator/commit/94c600e42b4ffcb26f6bbd58546284d70610c966))
+
 ## [1.1.6](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.5...v1.1.6) (2025-10-07)
 
 
