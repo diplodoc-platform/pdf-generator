@@ -56,6 +56,7 @@ export function generateTOCHTML(toc: TOCItem[]): string {
     }
 
     return `<div class="toc">
+      <h2 data-original-article="./none/toc"></h2>
       ${renderItems(toc)}
     </div>`;
 }

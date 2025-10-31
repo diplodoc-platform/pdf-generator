@@ -1,3 +1,7 @@
+pdf:
+  startPages:
+    - pdf-title-page1.md
+    - pdf-title-page2.md
 items:
   - name: Common
     href: index.md

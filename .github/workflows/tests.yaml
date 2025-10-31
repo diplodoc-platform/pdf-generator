@@ -19,4 +19,20 @@ jobs:
           node-version: 22
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
-      - run: npm run test
+      - name: Run tests
+        id: tests
+        run: npm run test
+        continue-on-error: true
+      - name: Upload screenshots
+        if: steps.tests.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: |
+            **/__image_snapshots__/
+            **/__diff_output__/
+          retention-days: 1
+          if-no-files-found: ignore
+      - name: Fail if tests failed
+        if: steps.tests.outcome == 'failure'
+        run: exit 1

@@ -1,3 +1,4 @@
+import {readFileSync, writeFileSync} from 'fs';
 import {join} from 'path';
 
 // @ts-ignore
@@ -8,6 +9,7 @@ import yfmStyles from '@diplodoc/transform/dist/css/yfm.css';
 import yfmPrintJS from '@diplodoc/transform/dist/js/print.js';
 // @ts-ignore
 import yfmJS from '@diplodoc/transform/dist/js/yfm.js';
+import {PDFDocument, rgb} from 'pdf-lib';
 import type {Page} from 'puppeteer-core';
 
 import {PDF_PAGE_DATA_FILENAME, SINGLE_PAGE_DATA_FILENAME} from './constants';
@@ -37,6 +39,7 @@ const FontsOverride = `
 `.trim();
 
 type MarkupGeneratorOptions = {
+    titlePages: string;
     html: string;
     tocHtml: string;
     base?: string;
@@ -45,6 +48,7 @@ type MarkupGeneratorOptions = {
 };
 
 export function generatePdfStaticMarkup({
+    titlePages,
     html,
     tocHtml,
     base,
@@ -64,7 +68,7 @@ ${injectPlatformAgnosticFonts ? FontsInjection : ''}
         ${yfmPrintStyles}
     </style>
     <style>
-        body.yfm {
+        main.yfm, nav {
             margin: 0 auto;
             min-width: 200px;
             max-width: 980px;
@@ -86,10 +90,13 @@ ${injectPlatformAgnosticFonts ? FontsInjection : ''}
 ${injectPlatformAgnosticFonts ? FontsOverride : ''}
 </head>
 <body class="yfm pdf">
+    ${titlePages}
     <nav>
       ${tocHtml}
     </nav>
-    ${html}
+    <main class="yfm">
+        ${html}
+    </main>
     <script>
         ${yfmJS}
     </script>
@@ -127,38 +134,24 @@ export function prepareGlobs(items: string[]) {
     ]);
 }
 
-export async function removeIframesInDetails(page: Page): Promise<void> {
-    const iframeCount = await page.evaluate(() => {
-        const iframes = document.querySelectorAll('iframe');
-        return iframes.length;
-    });
+export async function removeFirstNPageNumbers(inputPath: string, n: number) {
+    const pdfBytes = readFileSync(inputPath);
+    const pdfDoc = await PDFDocument.load(pdfBytes);
+    const pages = pdfDoc.getPages();
 
-    if (iframeCount === 0) {
-        return;
+    for (let i = 0; i < Math.min(n, pages.length); i++) {
+        const page = pages[i];
+        const {width} = page.getSize();
+
+        page.drawRectangle({
+            x: 0,
+            y: 0,
+            width: width,
+            height: 50,
+            color: rgb(1, 1, 1),
+        });
     }
 
-    await page.evaluate(() => {
-        const iframes = document.querySelectorAll('iframe');
-
-        iframes.forEach((iframe) => {
-            let currentElement: Element = iframe;
-            let level = 0;
-            const maxLevel = 5;
-
-            while (currentElement && level < maxLevel) {
-                const parentElement = currentElement.parentElement;
-                if (!parentElement) break;
-
-                if (parentElement.tagName.toLowerCase() === 'details') {
-                    if (parentElement.parentNode) {
-                        parentElement.parentNode.removeChild(parentElement);
-                    }
-                    break;
-                }
-
-                currentElement = parentElement;
-                level++;
-            }
-        });
-    });
+    const modifiedPdfBytes = await pdfDoc.save();
+    writeFileSync(inputPath, modifiedPdfBytes);
 }
