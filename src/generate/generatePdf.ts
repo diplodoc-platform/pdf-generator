@@ -11,7 +11,7 @@ import {
     Status,
 } from './constants';
 import {TOCEntry, addBookmarksFromTOC, generateTOC, generateTOCHTML} from './generatePdfTOC';
-import {generatePdfStaticMarkup, removeIframesInDetails} from './utils';
+import {generatePdfStaticMarkup, removeFirstNPageNumbers} from './utils';
 
 export interface GeneratePDFOptions {
     singlePagePath: string;
@@ -56,6 +56,7 @@ async function generatePdf({
     const parsedSinglePageTOCData = JSON.parse(TOCJSONInput);
 
     const pdfFileContent = generatePdfStaticMarkup({
+        titlePages: parsedSinglePageData.data.pdfTitlePages.content ?? '',
         html: parsedSinglePageData.data.html ?? '',
         tocHtml: generateTOCHTML(parsedSinglePageTOCData.items),
         base: parsedSinglePageData.router.base,
@@ -76,9 +77,6 @@ async function generatePdf({
             waitUntil: 'networkidle2',
             timeout: 0,
         });
-
-        // Temp solution for iframes within cut
-        await removeIframesInDetails(page);
 
         const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME).replace(`/${PDF_DIRENAME}/`, '/');
 
@@ -126,6 +124,11 @@ async function generatePdf({
 
         // Write result PDF with bookmarks
         writeFileSync(fullPdfFilePath, outputPdf);
+
+        const titlesPageCount = parsedSinglePageData.data.pdfTitlePages.pageCount;
+        if (titlesPageCount) {
+            await removeFirstNPageNumbers(fullPdfFilePath, titlesPageCount);
+        }
     } catch (error) {
         result.status = Status.FAIL;
         result.error = error;
