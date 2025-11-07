@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.8](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.7...v1.1.8) (2025-11-07)
+
+
+### Bug Fixes
+
+* add title pages ([dd89ce6](https://github.com/diplodoc-platform/pdf-generator/commit/dd89ce68d4a6a57d9a4d148b7c9bcfef8c1a273d))
+
 ## [1.1.7](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.6...v1.1.7) (2025-10-15)
 
 
