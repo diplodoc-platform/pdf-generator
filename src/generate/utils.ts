@@ -10,7 +10,6 @@ import yfmPrintJS from '@diplodoc/transform/dist/js/print.js';
 // @ts-ignore
 import yfmJS from '@diplodoc/transform/dist/js/yfm.js';
 import {PDFDocument, rgb} from 'pdf-lib';
-import type {Page} from 'puppeteer-core';
 
 import {PDF_PAGE_DATA_FILENAME, SINGLE_PAGE_DATA_FILENAME} from './constants';
 
