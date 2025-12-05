@@ -62,6 +62,7 @@ async function generatePdf({
         base: parsedSinglePageData.router.base,
         injectPlatformAgnosticFonts,
         script: parsedSinglePageData.data.meta.script ?? [],
+        cssLink: parsedSinglePageData.data.cssLink ?? [],
     });
 
     /* Save PDF source file */
@@ -101,13 +102,14 @@ async function generatePdf({
             `<div style="position: relative;width: 100%;height: 0;">` +
             footerTemplateVal +
             `<div style="position: absolute;right: 20px;bottom: 0;font-size: 10px;z-index: 0;padding: 0 5px;background: white;"><span class="pageNumber"></span></div></div>`;
-
+        
         await page.pdf({
             path: fullPdfFilePath,
             ...PUPPETEER_PAGE_OPTIONS,
             headerTemplate: headerTemplateVal,
             footerTemplate: resFooterVal,
             timeout: 0,
+            scale: 0.85
         });
 
         await page.close();
