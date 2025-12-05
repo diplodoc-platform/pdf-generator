@@ -35,3 +35,60 @@ export const PUPPETEER_BROWSER_LAUNCH_OPTIONS = {
 };
 
 export const PUPPETEER_PROCESS_LIMIT = 5;
+
+export const FONTS_INJECTION = `
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono&family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+`.trim();
+
+export const FONTS_OVERRIDE = `
+    <style>
+        body.yfm {
+            font-family: 'Inter' !important;
+            font-weight: 400 !important;
+        }
+
+        body.yfm code {
+            font-family: 'Atkinson Hyperlegible Mono' !important;
+            font-weight: 400 !important;
+        }
+
+        * {
+            text-rendering: geometricprecision !important;
+        }
+    </style>
+`.trim();
+
+export const PDF_STYLE_OVERRIDE = `
+    main.yfm, nav {
+        margin: 0 auto;
+        min-width: 200px;
+        max-width: 980px;
+        padding: 45px;
+        position: relative !important;
+    }
+
+    main.yfm .yfm-page-constructor {
+        transform: scale(0.95);
+    }
+    
+    .yfm .yfm-table-container {
+        position: static !important;
+        height: fit-content !important;
+    }
+    
+    .yfm .yfm-table-container > table {
+        transform: scale(0.9) !important;
+        position: static !important;
+    }
+    
+    .yfm .yfm-table-container > table th,
+    .yfm .yfm-table-container > table td {
+        white-space: normal;
+    }
+    
+    .shadow, .card, [class*="shadow"] {
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    }
+`

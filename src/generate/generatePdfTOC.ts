@@ -80,7 +80,7 @@ export async function addBookmarksFromTOC(
 
         for (const entry of entries) {
             const title = PDFHexString.fromText(entry.title);
-            const pageRef = pdfDoc.getPages()[entry.pageIndex].ref;
+            const pageRef = pdfDoc.getPages()[entry.pageIndex]?.ref;
             const dest = context.obj([pageRef, PDFName.of('Fit')]) as PDFArray;
 
             const outlineItemDict = context.obj({

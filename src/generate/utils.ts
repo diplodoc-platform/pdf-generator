@@ -1,5 +1,5 @@
-import {readFileSync, writeFileSync} from 'fs';
-import {join} from 'path';
+import {readFileSync, writeFileSync, existsSync} from 'fs';
+import {join, relative, dirname} from 'path';
 
 // @ts-ignore
 import yfmPrintStyles from '@diplodoc/transform/dist/css/print.css';
@@ -11,31 +11,7 @@ import yfmPrintJS from '@diplodoc/transform/dist/js/print.js';
 import yfmJS from '@diplodoc/transform/dist/js/yfm.js';
 import {PDFDocument, rgb} from 'pdf-lib';
 
-import {PDF_PAGE_DATA_FILENAME, SINGLE_PAGE_DATA_FILENAME} from './constants';
-
-const FontsInjection = `
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono&family=Inter:opsz@14..32&display=swap" rel="stylesheet">
-`.trim();
-
-const FontsOverride = `
-    <style>
-        body.yfm {
-            font-family: 'Inter' !important;
-            font-weight: 400 !important;
-        }
-
-        body.yfm code {
-            font-family: 'Atkinson Hyperlegible Mono' !important;
-            font-weight: 400 !important;
-        }
-
-        * {
-            text-rendering: geometricprecision !important;
-        }
-    </style>
-`.trim();
+import {FONTS_INJECTION, FONTS_OVERRIDE, PDF_PAGE_DATA_FILENAME, PDF_STYLE_OVERRIDE, SINGLE_PAGE_DATA_FILENAME} from './constants';
 
 type MarkupGeneratorOptions = {
     titlePages: string;
@@ -44,7 +20,48 @@ type MarkupGeneratorOptions = {
     base?: string;
     injectPlatformAgnosticFonts?: boolean;
     script: string[];
+    cssLink: string[];
 };
+
+function findOutputRoot(pdfDir: string): string {
+    let currentDir = pdfDir;
+    
+    while (currentDir !== dirname(currentDir)) {
+        const parentDir = dirname(currentDir);
+        const bundlePath = join(parentDir, '_bundle');
+        
+        if (existsSync(bundlePath)) {
+            return parentDir;
+        }
+        
+        currentDir = parentDir;
+    }
+    
+    return dirname(pdfDir);
+}
+
+export function calculateRelativePathsForPdf(
+    cssLinks: string[],
+    scriptLinks: string[],
+    pdfFilePath: string
+): { cssLink: string[]; script: string[] } {
+    const pdfDir = dirname(pdfFilePath);
+    
+    // Находим корень проекта, где находится _bundle директория
+    const outputRoot = findOutputRoot(pdfDir);
+    
+    // Функция для расчета относительного пути от PDF файла до файла
+    const getRelativePath = (src: string) => {
+        const targetPath = join(outputRoot, src);
+        const relativePath = relative(pdfDir, targetPath);
+        return relativePath;
+    };
+    
+    return {
+        cssLink: cssLinks.map(getRelativePath),
+        script: scriptLinks.map(getRelativePath)
+    };
+}
 
 export function generatePdfStaticMarkup({
     titlePages,
@@ -53,66 +70,49 @@ export function generatePdfStaticMarkup({
     base,
     injectPlatformAgnosticFonts,
     script,
+    cssLink,
 }: MarkupGeneratorOptions) {
     return `
-<!doctype html>
-<html>
-<head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="Content-Security-Policy" content="frame-src 'none'">
-    <base href="${base ?? '.'}"/>
-${injectPlatformAgnosticFonts ? FontsInjection : ''}  
-    <style>
-        ${yfmStyles}
-        ${yfmPrintStyles}
-    </style>
-    <style>
-        main.yfm, nav {
-            margin: 0 auto;
-            min-width: 200px;
-            max-width: 980px;
-            padding: 45px;
-        }
-        .yfm .yfm-table-container {
-            position: static !important;
-            height: fit-content !important;
-        }
-        .yfm .yfm-table-container > table {
-            transform: scale(0.9) !important;
-            position: static !important;
-        }
-        .yfm .yfm-table-container > table th,
-        .yfm .yfm-table-container > table td {
-            white-space: normal;
-        }
-    </style>
-${injectPlatformAgnosticFonts ? FontsOverride : ''}
-</head>
-<body class="yfm pdf">
-    ${titlePages}
-    <nav>
-      ${tocHtml}
-    </nav>
-    <main class="yfm">
-        ${html}
-    </main>
-    <script>
-        ${yfmJS}
-    </script>
-    <script>
-        ${yfmPrintJS}
-    </script>
-    ${script.map((src) => `<script src="../${src}"></script>`).join('')}
-    <script>
-        // Initialize mermaid runtime
-        window.mermaidJsonp = window.mermaidJsonp || [];
-        window.mermaidJsonp.push(function(mermaid) {
-            mermaid.initialize({ startOnLoad: false });
-            mermaid.run();
-        });
-    </script>
-    </body>
-</html>
+        <!doctype html>
+        <html>
+        <head>
+            <meta charset="UTF-8"/>
+            <meta http-equiv="Content-Security-Policy" content="frame-src 'none'">
+            ${cssLink.map((src) => `<link type="text/css" rel="stylesheet" href="${src}">`).join('')}
+            <base href="${base ?? '.'}"/>
+            ${injectPlatformAgnosticFonts ? FONTS_INJECTION : ''}  
+            <style>
+                ${yfmStyles}
+                ${yfmPrintStyles}
+                ${PDF_STYLE_OVERRIDE}
+            </style>
+            ${injectPlatformAgnosticFonts ? FONTS_OVERRIDE : ''}
+        </head>
+        <body class="yfm pdf">
+            ${titlePages}
+            <nav>
+            ${tocHtml}
+            </nav>
+            <main class="yfm">
+            ${html}
+            </main>
+            <script>
+                ${yfmJS}
+            </script>
+            <script>
+                ${yfmPrintJS}
+            </script>
+            ${script.map((src) => `<script src="../${src}"></script>`).join('')}
+            <script>
+                // Initialize mermaid runtime
+                window.mermaidJsonp = window.mermaidJsonp || [];
+                window.mermaidJsonp.push(function(mermaid) {
+                    mermaid.initialize({ startOnLoad: false });
+                    mermaid.run();
+                });
+            </script>
+            </body>
+        </html>s
     `.trim();
 }
 

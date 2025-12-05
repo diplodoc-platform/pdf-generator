@@ -27,3 +27,5 @@ items:
     href: mermaid.md
   - name: Frame within Cut
     href: iframe.md
+  - name: PC Pages
+    href: index.yaml
