@@ -1,5 +1,5 @@
-import {readFileSync, writeFileSync, existsSync} from 'fs';
-import {join, relative, dirname} from 'path';
+import {existsSync, readFileSync, writeFileSync} from 'fs';
+import {dirname, join, relative} from 'path';
 
 // @ts-ignore
 import yfmPrintStyles from '@diplodoc/transform/dist/css/print.css';
@@ -11,7 +11,13 @@ import yfmPrintJS from '@diplodoc/transform/dist/js/print.js';
 import yfmJS from '@diplodoc/transform/dist/js/yfm.js';
 import {PDFDocument, rgb} from 'pdf-lib';
 
-import {FONTS_INJECTION, FONTS_OVERRIDE, PDF_PAGE_DATA_FILENAME, PDF_STYLE_OVERRIDE, SINGLE_PAGE_DATA_FILENAME} from './constants';
+import {
+    FONTS_INJECTION,
+    FONTS_OVERRIDE,
+    PDF_PAGE_DATA_FILENAME,
+    PDF_STYLE_OVERRIDE,
+    SINGLE_PAGE_DATA_FILENAME,
+} from './constants';
 
 type MarkupGeneratorOptions = {
     titlePages: string;
@@ -25,41 +31,41 @@ type MarkupGeneratorOptions = {
 
 function findOutputRoot(pdfDir: string): string {
     let currentDir = pdfDir;
-    
+
     while (currentDir !== dirname(currentDir)) {
         const parentDir = dirname(currentDir);
         const bundlePath = join(parentDir, '_bundle');
-        
+
         if (existsSync(bundlePath)) {
             return parentDir;
         }
-        
+
         currentDir = parentDir;
     }
-    
+
     return dirname(pdfDir);
 }
 
 export function calculateRelativePathsForPdf(
     cssLinks: string[],
     scriptLinks: string[],
-    pdfFilePath: string
-): { cssLink: string[]; script: string[] } {
+    pdfFilePath: string,
+): {cssLink: string[]; script: string[]} {
     const pdfDir = dirname(pdfFilePath);
-    
+
     // Находим корень проекта, где находится _bundle директория
     const outputRoot = findOutputRoot(pdfDir);
-    
+
     // Функция для расчета относительного пути от PDF файла до файла
     const getRelativePath = (src: string) => {
         const targetPath = join(outputRoot, src);
         const relativePath = relative(pdfDir, targetPath);
         return relativePath;
     };
-    
+
     return {
         cssLink: cssLinks.map(getRelativePath),
-        script: scriptLinks.map(getRelativePath)
+        script: scriptLinks.map(getRelativePath),
     };
 }
 
@@ -78,7 +84,9 @@ export function generatePdfStaticMarkup({
         <head>
             <meta charset="UTF-8"/>
             <meta http-equiv="Content-Security-Policy" content="frame-src 'none'">
-            ${cssLink.map((src) => `<link type="text/css" rel="stylesheet" href="${src}">`).join('')}
+            ${cssLink
+                .map((src) => `<link type="text/css" rel="stylesheet" href="${src}">`)
+                .join('')}
             <base href="${base ?? '.'}"/>
             ${injectPlatformAgnosticFonts ? FONTS_INJECTION : ''}  
             <style>

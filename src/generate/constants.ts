@@ -91,4 +91,4 @@ export const PDF_STYLE_OVERRIDE = `
     .shadow, .card, [class*="shadow"] {
         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
     }
-`
+`;
