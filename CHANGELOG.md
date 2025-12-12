@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.10](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.9...v1.1.10) (2025-12-12)
+
+
+### Bug Fixes
+
+* add pc page rendering ([d1c1bd6](https://github.com/diplodoc-platform/pdf-generator/commit/d1c1bd60ddb862ae641c58bc35adca9fd3749d93))
+
 ## [1.1.9](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.8...v1.1.9) (2025-11-11)
 
 
