@@ -19,6 +19,7 @@
     "build": "webpack",
     "lint:js": "eslint --ext .js,.jsx,.ts,.tsx .",
     "lint": "npm run lint:js",
+    "lint:fix": "eslint --fix ./src",
     "binary": "pkg .",
     "test": "npm run build && npm run integration:prepare && jest -i",
     "integration:clean": "rm -rf ./integration-output",

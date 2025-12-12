@@ -11,7 +11,11 @@ import {
     Status,
 } from './constants';
 import {TOCEntry, addBookmarksFromTOC, generateTOC, generateTOCHTML} from './generatePdfTOC';
-import {generatePdfStaticMarkup, removeFirstNPageNumbers, calculateRelativePathsForPdf} from './utils';
+import {
+    calculateRelativePathsForPdf,
+    generatePdfStaticMarkup,
+    removeFirstNPageNumbers,
+} from './utils';
 
 export interface GeneratePDFOptions {
     singlePagePath: string;
@@ -62,10 +66,10 @@ async function generatePdf({
     const pdfDirPath = dirname(singlePagePath);
     const pdfFileSourcePath = join(pdfDirPath, PDF_SOURCE_FILENAME);
 
-    const { cssLink: correctedCssLinks } = calculateRelativePathsForPdf(
+    const {cssLink: correctedCssLinks} = calculateRelativePathsForPdf(
         parsedSinglePageData.data.cssLink ?? [],
         [],
-        pdfFileSourcePath
+        pdfFileSourcePath,
     );
 
     const pdfFileContent = generatePdfStaticMarkup({
@@ -75,7 +79,7 @@ async function generatePdf({
         base: parsedSinglePageData.router.base,
         injectPlatformAgnosticFonts,
         script: parsedSinglePageData.data.meta.script ?? [],
-        cssLink: correctedCssLinks
+        cssLink: correctedCssLinks,
     });
 
     writeFileSync(pdfFileSourcePath, pdfFileContent);
@@ -111,7 +115,7 @@ async function generatePdf({
             `<div style="position: relative;width: 100%;height: 0;">` +
             footerTemplateVal +
             `<div style="position: absolute;right: 20px;bottom: 0;font-size: 10px;z-index: 0;padding: 0 5px;background: white;"><span class="pageNumber"></span></div></div>`;
-        
+
         await page.pdf({
             path: fullPdfFilePath,
             ...PUPPETEER_PAGE_OPTIONS,
