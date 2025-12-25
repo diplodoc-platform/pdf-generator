@@ -53,10 +53,8 @@ export function calculateRelativePathsForPdf(
 ): {cssLink: string[]; script: string[]} {
     const pdfDir = dirname(pdfFilePath);
 
-    // Находим корень проекта, где находится _bundle директория
     const outputRoot = findOutputRoot(pdfDir);
 
-    // Функция для расчета относительного пути от PDF файла до файла
     const getRelativePath = (src: string) => {
         const targetPath = join(outputRoot, src);
         const relativePath = relative(pdfDir, targetPath);
@@ -148,8 +146,9 @@ export async function removeFirstNPageNumbers(inputPath: string, n: number) {
 
     for (let i = 0; i < Math.min(n, pages.length); i++) {
         const page = pages[i];
-        const {width} = page.getSize();
+        const {width, height} = page.getSize();
 
+        page.setCropBox(0, 50, width, height - 80);
         page.drawRectangle({
             x: 0,
             y: 0,
