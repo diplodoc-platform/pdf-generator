@@ -61,6 +61,11 @@ export const FONTS_OVERRIDE = `
 `.trim();
 
 export const PDF_STYLE_OVERRIDE = `
+    .pdf-page-wrapper {
+        page-break-after: always;
+        page-break-inside: avoid;
+    }
+
     main.yfm, nav {
         margin: 0 auto;
         min-width: 200px;
