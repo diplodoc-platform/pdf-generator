@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.12](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.11...v1.1.12) (2025-12-25)
+
+
+### Bug Fixes
+
+* title page margins ([e70a11f](https://github.com/diplodoc-platform/pdf-generator/commit/e70a11f0b9a9645f9e28c3dd08883ca637b6f6b9))
+
 ## [1.1.11](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.10...v1.1.11) (2025-12-12)
 
 
