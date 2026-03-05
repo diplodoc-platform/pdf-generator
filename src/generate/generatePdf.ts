@@ -73,7 +73,7 @@ async function generatePdf({
     );
 
     const pdfFileContent = generatePdfStaticMarkup({
-        titlePages: parsedSinglePageData.data.pdfTitlePages.content ?? '',
+        titlePages: parsedSinglePageData.data.pdfTitlePages?.content ?? '',
         html: parsedSinglePageData.data.html ?? '',
         tocHtml: generateTOCHTML(parsedSinglePageTOCData.items),
         base: parsedSinglePageData.router.base,
@@ -140,7 +140,7 @@ async function generatePdf({
         // Write result PDF with bookmarks
         writeFileSync(fullPdfFilePath, outputPdf);
 
-        const titlesPageCount = parsedSinglePageData.data.pdfTitlePages.pageCount;
+        const titlesPageCount = parsedSinglePageData.data.pdfTitlePages?.pageCount;
         if (titlesPageCount) {
             await removeFirstNPageNumbers(fullPdfFilePath, titlesPageCount);
         }
