@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.13](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.12...v1.1.13) (2026-03-05)
+
+
+### Bug Fixes
+
+* start page fix ([6ea1356](https://github.com/diplodoc-platform/pdf-generator/commit/6ea1356609942fa47564f4eff29d63f7d1a941f3))
+
 ## [1.1.12](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.11...v1.1.12) (2025-12-25)
 
 
