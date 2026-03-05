@@ -7,6 +7,7 @@ name: release
 permissions:
   contents: write
   pull-requests: write
+  id-token: write  # Обязательно для OIDC/Trusted Publishing
 
 jobs:
   release:
@@ -26,8 +27,6 @@ jobs:
         with:
           token: ${{secrets.YC_UI_BOT_GITHUB_TOKEN}}
           release-type: node
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.ROBOT_DATAUI_NPM_TOKEN}}
+      - run: npm publish --provenance --access public
         if: ${{ steps.release.outputs.release_created }}
         shell: bash
