@@ -31,7 +31,7 @@ export const CHROMIUM_RESOLVER_OPTIONS = {
 
 export const PUPPETEER_BROWSER_LAUNCH_OPTIONS = {
     headless: true,
-    args: ['--no-sandbox'],
+    args: ['--no-sandbox', '--disable-web-security'],
 };
 
 export const PUPPETEER_PROCESS_LIMIT = 5;

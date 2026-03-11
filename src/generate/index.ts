@@ -48,7 +48,7 @@ async function generatePdfs({
 
     let browser: Browser;
     try {
-        browser = await launchBrowser(imageQuality !== undefined);
+        browser = await launchBrowser();
     } catch (e) {
         console.error('The browser cannot be launched. Failed to generate PDF files.', e);
 
@@ -99,17 +99,11 @@ async function generatePdfs({
     return Status.SUCCESS;
 }
 
-async function launchBrowser(disableWebSecurity = false) {
+async function launchBrowser() {
     const stats = await pcr(CHROMIUM_RESOLVER_OPTIONS);
-
-    const args = [...PUPPETEER_BROWSER_LAUNCH_OPTIONS.args];
-    if (disableWebSecurity) {
-        args.push('--disable-web-security');
-    }
 
     return await stats.puppeteer.launch({
         ...PUPPETEER_BROWSER_LAUNCH_OPTIONS,
-        args,
         protocolTimeout: 600_000,
         executablePath: stats.executablePath,
     });
