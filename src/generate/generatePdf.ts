@@ -23,6 +23,7 @@ export interface GeneratePDFOptions {
     injectPlatformAgnosticFonts?: boolean;
     customHeader?: string;
     customFooter?: string;
+    imageQuality?: number;
 }
 
 export interface GeneratePDFResult {
@@ -36,6 +37,7 @@ async function generatePdf({
     injectPlatformAgnosticFonts,
     customHeader,
     customFooter,
+    imageQuality,
 }: GeneratePDFOptions): Promise<GeneratePDFResult> {
     console.log(`Processing singlePagePath = ${singlePagePath}`);
 
@@ -91,6 +93,10 @@ async function generatePdf({
             waitUntil: 'networkidle2',
             timeout: 0,
         });
+
+        if (imageQuality !== undefined && imageQuality < 100) {
+            await compressPageImages(page, imageQuality);
+        }
 
         const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME).replace(`/${PDF_DIRENAME}/`, '/');
 
@@ -155,6 +161,103 @@ async function generatePdf({
     return result;
 }
 
-export {generatePdf};
+async function compressPageImages(page: import('puppeteer-core').Page, quality: number) {
+    const stats = await page.evaluate((q) => {
+        const MAX_DIMENSION = 1600;
+        let compressed = 0;
+        let skippedCrossOrigin = 0;
+        let skippedSmallOrSvg = 0;
+
+        function compressImage(img: HTMLImageElement) {
+            if (!img.src || img.naturalWidth === 0) {
+                return;
+            }
+
+            if (img.src.includes('.svg') || img.src.startsWith('data:image/svg')) {
+                skippedSmallOrSvg++;
+                return;
+            }
+
+            if (img.naturalWidth < 100 && img.naturalHeight < 100) {
+                skippedSmallOrSvg++;
+                return;
+            }
+
+            let {naturalWidth: w, naturalHeight: h} = img;
+
+            if (w > MAX_DIMENSION) {
+                h = Math.round((h * MAX_DIMENSION) / w);
+                w = MAX_DIMENSION;
+            }
+
+            if (h > MAX_DIMENSION) {
+                w = Math.round((w * MAX_DIMENSION) / h);
+                h = MAX_DIMENSION;
+            }
+
+            const canvas = document.createElement('canvas');
+
+            canvas.width = w;
+            canvas.height = h;
+
+            const ctx = canvas.getContext('2d')!;
+
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, w, h);
+            ctx.drawImage(img, 0, 0, w, h);
+
+            try {
+                img.src = canvas.toDataURL('image/jpeg', q / 100);
+                compressed++;
+            } catch (_e) {
+                skippedCrossOrigin++;
+            }
+        }
+
+        const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('img'));
+
+        imgs.forEach((img) => {
+            if (img.complete) {
+                compressImage(img);
+            } else {
+                img.onload = () => compressImage(img);
+            }
+        });
+
+        return {total: imgs.length, compressed, skippedCrossOrigin, skippedSmallOrSvg};
+    }, quality);
+
+    console.log(
+        `Image compression (quality=${quality}): ` +
+            `total=${stats.total}, compressed=${stats.compressed}, ` +
+            `skipped_cross_origin=${stats.skippedCrossOrigin}, skipped_small_or_svg=${stats.skippedSmallOrSvg}`,
+    );
+
+    await page.evaluate(
+        () =>
+            new Promise<void>((resolve) => {
+                const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('img'));
+                const pending = imgs.filter((img) => !img.complete);
+
+                if (pending.length === 0) {
+                    resolve();
+                    return;
+                }
+
+                let settled = 0;
+
+                const onSettle = () => {
+                    if (++settled >= pending.length) resolve();
+                };
+
+                pending.forEach((img) => {
+                    img.onload = onSettle;
+                    img.onerror = onSettle;
+                });
+            }),
+    );
+}
+
+export {generatePdf, compressPageImages};
 
 export default {generatePdf};
