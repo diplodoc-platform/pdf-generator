@@ -96,4 +96,18 @@ export const PDF_STYLE_OVERRIDE = `
     .shadow, .card, [class*="shadow"] {
         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
     }
+
+    pre, pre code {
+        white-space: pre-wrap !important;
+        word-break: break-all !important;
+        overflow: visible !important;
+    }
+
+    .yfm .yfm-table-container {
+        overflow: visible !important;
+    }
+
+    main.yfm {
+        overflow-wrap: break-word;
+    }
 `;
