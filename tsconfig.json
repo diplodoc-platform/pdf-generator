@@ -9,7 +9,6 @@
       "resolveJsonModule": true,
       "importHelpers": true,
       "useUnknownInCatchVariables": false,
-      "rootDir": "src"
   },
   "include": [
       "src/**/*.ts",
