@@ -118,7 +118,7 @@ export function generatePdfStaticMarkup({
                 });
             </script>
             </body>
-        </html>s
+        </html>
     `.trim();
 }
 
