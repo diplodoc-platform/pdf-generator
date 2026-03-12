@@ -17,7 +17,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          registry-url: 'https://registry.npmjs.org'
       - run: npm ci
         shell: bash
       - uses: codex-team/action-nodejs-package-info@v1
@@ -30,3 +29,5 @@ jobs:
       - run: npm publish --provenance --access public
         if: ${{ steps.release.outputs.release_created }}
         shell: bash
+        env:
+          NPM_CONFIG_REGISTRY: 'https://registry.npmjs.org'

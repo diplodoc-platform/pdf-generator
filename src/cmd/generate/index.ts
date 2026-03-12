@@ -17,6 +17,7 @@ const handler = async (args: Arguments<any>) => {
     const injectPlatformAgnosticFonts = args['inject-platform-agnostic-fonts'];
     const customHeader = args['custom-header'];
     const customFooter = args['custom-footer'];
+    const imageQuality = args['image-quality'];
 
     const status = await generatePdfs({
         inputFolder,
@@ -25,6 +26,7 @@ const handler = async (args: Arguments<any>) => {
         injectPlatformAgnosticFonts,
         customHeader,
         customFooter,
+        imageQuality,
     });
 
     switch (status) {
@@ -80,7 +82,15 @@ function builder<T>(argv: Argv<T>) {
                 'Example: --custom-footer ./footer.html\n',
             type: 'string',
         })
+        .option('image-quality', {
+            describe:
+                'JPEG quality for images (1-100). Compresses raster images before embedding into PDF, ' +
+                'which can significantly reduce file size for image-heavy documents.\n' +
+                'Example: --image-quality 80\n',
+            type: 'number',
+        })
         .example('pdf-generator -i ./input', '')
+        .example('pdf-generator -i ./input --image-quality 80', '')
         .demandOption(['input'], 'Please provide input argument to work with this tool');
 }
 

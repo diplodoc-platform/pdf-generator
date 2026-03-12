@@ -22,6 +22,7 @@ export interface GeneratePDFsOptions {
     injectPlatformAgnosticFonts?: boolean;
     customHeader?: string;
     customFooter?: string;
+    imageQuality?: number;
 }
 
 async function generatePdfs({
@@ -31,6 +32,7 @@ async function generatePdfs({
     injectPlatformAgnosticFonts,
     customHeader = '',
     customFooter = '',
+    imageQuality,
 }: GeneratePDFsOptions): Promise<Status> {
     const globs = prepareGlobs(includeDirs);
     const ignore = prepareGlobs(excludeDirs);
@@ -46,7 +48,7 @@ async function generatePdfs({
 
     let browser: Browser;
     try {
-        browser = await launchBrowser();
+        browser = await launchBrowser(imageQuality !== undefined);
     } catch (e) {
         console.error('The browser cannot be launched. Failed to generate PDF files.', e);
 
@@ -68,6 +70,7 @@ async function generatePdfs({
                 injectPlatformAgnosticFonts,
                 customHeader,
                 customFooter,
+                imageQuality,
             });
 
             if (result.status === Status.FAIL) {
@@ -96,11 +99,16 @@ async function generatePdfs({
     return Status.SUCCESS;
 }
 
-async function launchBrowser() {
+async function launchBrowser(disableWebSecurity = false) {
     const stats = await pcr(CHROMIUM_RESOLVER_OPTIONS);
+
+    const args = disableWebSecurity
+        ? [...PUPPETEER_BROWSER_LAUNCH_OPTIONS.args, '--disable-web-security']
+        : PUPPETEER_BROWSER_LAUNCH_OPTIONS.args;
 
     return await stats.puppeteer.launch({
         ...PUPPETEER_BROWSER_LAUNCH_OPTIONS,
+        args,
         protocolTimeout: 600_000,
         executablePath: stats.executablePath,
     });

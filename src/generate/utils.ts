@@ -161,3 +161,119 @@ export async function removeFirstNPageNumbers(inputPath: string, n: number) {
     const modifiedPdfBytes = await pdfDoc.save();
     writeFileSync(inputPath, modifiedPdfBytes);
 }
+
+// Rasterizes SVG <img> elements to PNG via canvas.
+// Fixes rendering of complex SVGs (e.g. with embedded base64 PNG, masks, xlink:href)
+// which Chromium's PDF print pipeline sometimes fails to render.
+export async function rasterizeSvgImages(page: import('puppeteer-core').Page) {
+    await page.evaluate(() => {
+        const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('img'));
+
+        imgs.forEach((img) => {
+            if (!img.src.includes('.svg') && !img.src.startsWith('data:image/svg')) {
+                return;
+            }
+
+            const w = img.naturalWidth || img.width || 100;
+            const h = img.naturalHeight || img.height || 100;
+
+            const canvas = document.createElement('canvas');
+
+            canvas.width = w;
+            canvas.height = h;
+
+            const ctx = canvas.getContext('2d')!;
+
+            ctx.drawImage(img, 0, 0, w, h);
+
+            try {
+                img.src = canvas.toDataURL('image/png');
+            } catch (e) {
+                console.warn('Failed to rasterize SVG image:', img.src, e);
+            }
+        });
+    });
+}
+
+export async function compressPageImages(page: import('puppeteer-core').Page, quality: number) {
+    await page.evaluate((q) => {
+        const MAX_DIMENSION = 1600;
+
+        function compressImage(img: HTMLImageElement) {
+            if (!img.src || img.naturalWidth === 0) {
+                return;
+            }
+
+            if (img.src.includes('.svg') || img.src.startsWith('data:image/svg')) {
+                return;
+            }
+
+            if (img.naturalWidth < 100 && img.naturalHeight < 100) {
+                return;
+            }
+
+            let {naturalWidth: w, naturalHeight: h} = img;
+
+            if (w > MAX_DIMENSION) {
+                h = Math.round((h * MAX_DIMENSION) / w);
+                w = MAX_DIMENSION;
+            }
+
+            if (h > MAX_DIMENSION) {
+                w = Math.round((w * MAX_DIMENSION) / h);
+                h = MAX_DIMENSION;
+            }
+
+            const canvas = document.createElement('canvas');
+
+            canvas.width = w;
+            canvas.height = h;
+
+            const ctx = canvas.getContext('2d')!;
+
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, w, h);
+            ctx.drawImage(img, 0, 0, w, h);
+
+            try {
+                img.src = canvas.toDataURL('image/jpeg', q / 100);
+            } catch (_e) {
+                // Cross-origin image (tainted canvas) — skip compression
+            }
+        }
+
+        const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('img'));
+
+        imgs.forEach((img) => {
+            if (img.complete) {
+                compressImage(img);
+            } else {
+                img.onload = () => compressImage(img);
+            }
+        });
+    }, quality);
+
+    await page.evaluate(
+        () =>
+            new Promise<void>((resolve) => {
+                const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('img'));
+                const pending = imgs.filter((img) => !img.complete);
+
+                if (pending.length === 0) {
+                    resolve();
+                    return;
+                }
+
+                let settled = 0;
+
+                const onSettle = () => {
+                    if (++settled >= pending.length) resolve();
+                };
+
+                pending.forEach((img) => {
+                    img.onload = onSettle;
+                    img.onerror = onSettle;
+                });
+            }),
+    );
+}

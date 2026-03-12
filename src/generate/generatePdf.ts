@@ -13,7 +13,9 @@ import {
 import {TOCEntry, addBookmarksFromTOC, generateTOC, generateTOCHTML} from './generatePdfTOC';
 import {
     calculateRelativePathsForPdf,
+    compressPageImages,
     generatePdfStaticMarkup,
+    rasterizeSvgImages,
     removeFirstNPageNumbers,
 } from './utils';
 
@@ -23,6 +25,7 @@ export interface GeneratePDFOptions {
     injectPlatformAgnosticFonts?: boolean;
     customHeader?: string;
     customFooter?: string;
+    imageQuality?: number;
 }
 
 export interface GeneratePDFResult {
@@ -36,6 +39,7 @@ async function generatePdf({
     injectPlatformAgnosticFonts,
     customHeader,
     customFooter,
+    imageQuality,
 }: GeneratePDFOptions): Promise<GeneratePDFResult> {
     console.log(`Processing singlePagePath = ${singlePagePath}`);
 
@@ -91,6 +95,12 @@ async function generatePdf({
             waitUntil: 'networkidle2',
             timeout: 0,
         });
+
+        await rasterizeSvgImages(page);
+
+        if (imageQuality !== undefined && imageQuality < 100) {
+            await compressPageImages(page, imageQuality);
+        }
 
         const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME).replace(`/${PDF_DIRENAME}/`, '/');
 
