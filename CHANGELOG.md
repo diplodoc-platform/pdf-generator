@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.1](https://github.com/diplodoc-platform/pdf-generator/compare/v1.2.0...v1.2.1) (2026-03-12)
+
+
+### Bug Fixes
+
+* fixed svg rasterize ([ca6909e](https://github.com/diplodoc-platform/pdf-generator/commit/ca6909e97dd6daf56753d179659f014d7216d68e))
+* fixed svg rasterize ([e16e0e3](https://github.com/diplodoc-platform/pdf-generator/commit/e16e0e3a9809bd1b2c3fa84cf6890b624020e550))
+
 ## [1.2.0](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.14...v1.2.0) (2026-03-12)
 
 
