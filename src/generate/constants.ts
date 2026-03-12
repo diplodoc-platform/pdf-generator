@@ -66,6 +66,41 @@ export const PDF_STYLE_OVERRIDE = `
         page-break-inside: avoid;
     }
 
+    .pdf-page-wrapper:last-child {
+        page-break-after: avoid;
+    }
+
+    @media print {
+        /* Prevent double page-break: pdf-page-wrapper has page-break-after: always,
+           and h1/h2[data-original-article] inside it gets page-break-before: always
+           from print.css — two adjacent breaks create a blank page. */
+        .pdf-page-wrapper h1[data-original-article],
+        .pdf-page-wrapper h2[data-original-article],
+        nav .toc h2[data-original-article] {
+            page-break-before: avoid;
+        }
+    }
+
+    nav {
+        page-break-after: always;
+    }
+
+    /* page-constructor has min-height: 100vh from bundle CSS which creates blank pages in PDF */
+    .yfm-page-constructor,
+    .pc-page-constructor,
+    .pc-page-constructor__wrapper,
+    .pc-layout,
+    .pc-layout__content {
+        min-height: 0 !important;
+        height: auto !important;
+    }
+
+    /* Hide pdf-page-wrapper (including its page-break-after: always) when it contains
+       an unhydrated page-constructor — it renders as empty divs and creates a blank page */
+    .pdf-page-wrapper:has(.yfm-page-constructor[data-hydrated="false"]) {
+        display: none;
+    }
+
     main.yfm, nav {
         margin: 0 auto;
         min-width: 200px;
