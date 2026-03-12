@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.2.0](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.14...v1.2.0) (2026-03-12)
+
+
+### Features
+
+* added flag --image-quality ([1ca65e0](https://github.com/diplodoc-platform/pdf-generator/commit/1ca65e08832e070a370f1b64701ac1206b78f1be))
+* added flag --image-quality ([6e50f1e](https://github.com/diplodoc-platform/pdf-generator/commit/6e50f1ea304e43f4bd2929582a860149ecef6a86))
+
+
+### Bug Fixes
+
+* empty pages ([bedf324](https://github.com/diplodoc-platform/pdf-generator/commit/bedf3245db9ea730f64d51389e00c1a075e4c4da))
+* fixed svg ([b23a5ea](https://github.com/diplodoc-platform/pdf-generator/commit/b23a5eae61c9bbd405a07677b92d7840957fd14f))
+* fixed tests ([a66718a](https://github.com/diplodoc-platform/pdf-generator/commit/a66718a4ef3a8e1be87edc3ff9bf046e0ad24555))
+* fixed tests ([6ed4a15](https://github.com/diplodoc-platform/pdf-generator/commit/6ed4a156c69614f9fd1c5776e9d881caaec21a59))
+
 ## [1.1.14](https://github.com/diplodoc-platform/pdf-generator/compare/v1.1.13...v1.1.14) (2026-03-11)
 
 
