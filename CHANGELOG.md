@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.1](https://github.com/diplodoc-platform/pdf-generator/compare/v1.3.0...v1.3.1) (2026-03-12)
+
+
+### Bug Fixes
+
+* fixed trusted publishing ([1cd4129](https://github.com/diplodoc-platform/pdf-generator/commit/1cd4129edc9663acb93212ff104d9e5072cb0682))
+* fixed trusted publishing ([2160a21](https://github.com/diplodoc-platform/pdf-generator/commit/2160a212ba45a5cf7812ecd538e4d78de622ac15))
+
 ## [1.3.0](https://github.com/diplodoc-platform/pdf-generator/compare/v1.2.1...v1.3.0) (2026-03-12)
 
 
