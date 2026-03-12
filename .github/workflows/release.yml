@@ -27,6 +27,8 @@ jobs:
         with:
           token: ${{secrets.YC_UI_BOT_GITHUB_TOKEN}}
           release-type: node
-      - run: npm publish --provenance --access public
+      - run: |
+          npm config delete //registry.npmjs.org/:_authToken
+          npm publish --provenance --access public
         if: ${{ steps.release.outputs.release_created }}
         shell: bash
