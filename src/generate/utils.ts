@@ -174,6 +174,10 @@ export async function rasterizeSvgImages(page: import('puppeteer-core').Page) {
                 return;
             }
 
+            if (!img.complete || (img.naturalWidth === 0 && img.naturalHeight === 0)) {
+                return;
+            }
+
             const w = img.naturalWidth || img.width || 100;
             const h = img.naturalHeight || img.height || 100;
 
@@ -184,9 +188,8 @@ export async function rasterizeSvgImages(page: import('puppeteer-core').Page) {
 
             const ctx = canvas.getContext('2d')!;
 
-            ctx.drawImage(img, 0, 0, w, h);
-
             try {
+                ctx.drawImage(img, 0, 0, w, h);
                 img.src = canvas.toDataURL('image/png');
             } catch (e) {
                 console.warn('Failed to rasterize SVG image:', img.src, e);
