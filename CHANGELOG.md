@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.3](https://github.com/diplodoc-platform/pdf-generator/compare/v1.3.2...v1.3.3) (2026-03-13)
+
+
+### Bug Fixes
+
+* added --rasterize-svg flag ([a06211b](https://github.com/diplodoc-platform/pdf-generator/commit/a06211b340ae6479248ebb214f98e46aee366c93))
+* added --rasterize-svg flag ([bfb669f](https://github.com/diplodoc-platform/pdf-generator/commit/bfb669f581adb0cf3319bfb40b22fb2b150d8a96))
+
 ## [1.3.2](https://github.com/diplodoc-platform/pdf-generator/compare/v1.3.1...v1.3.2) (2026-03-13)
 
 
