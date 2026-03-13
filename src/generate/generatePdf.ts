@@ -27,6 +27,7 @@ export interface GeneratePDFOptions {
     customHeader?: string;
     customFooter?: string;
     imageQuality?: number;
+    rasterizeSvg?: boolean;
 }
 
 export interface GeneratePDFResult {
@@ -41,6 +42,7 @@ async function generatePdf({
     customHeader,
     customFooter,
     imageQuality,
+    rasterizeSvg = false,
 }: GeneratePDFOptions): Promise<GeneratePDFResult> {
     console.log(`Processing singlePagePath = ${singlePagePath}`);
 
@@ -97,8 +99,10 @@ async function generatePdf({
             timeout: 0,
         });
 
-        await rasterizeSvgImages(page);
-        await rasterizeInlineSvgs(page);
+        if (rasterizeSvg) {
+            await rasterizeSvgImages(page);
+            await rasterizeInlineSvgs(page);
+        }
 
         if (imageQuality !== undefined && imageQuality < 100) {
             await compressPageImages(page, imageQuality);

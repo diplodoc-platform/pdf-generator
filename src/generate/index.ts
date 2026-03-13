@@ -23,6 +23,7 @@ export interface GeneratePDFsOptions {
     customHeader?: string;
     customFooter?: string;
     imageQuality?: number;
+    rasterizeSvg?: boolean;
 }
 
 async function generatePdfs({
@@ -33,6 +34,7 @@ async function generatePdfs({
     customHeader = '',
     customFooter = '',
     imageQuality,
+    rasterizeSvg = false,
 }: GeneratePDFsOptions): Promise<Status> {
     const globs = prepareGlobs(includeDirs);
     const ignore = prepareGlobs(excludeDirs);
@@ -71,6 +73,7 @@ async function generatePdfs({
                 customHeader,
                 customFooter,
                 imageQuality,
+                rasterizeSvg,
             });
 
             if (result.status === Status.FAIL) {

@@ -186,10 +186,8 @@ export async function rasterizeInlineSvgs(page: import('puppeteer-core').Page) {
                     const rect = svg.getBoundingClientRect();
                     const wAttr = svg.getAttribute('width');
                     const hAttr = svg.getAttribute('height');
-                    const w =
-                        Math.ceil(rect.width) || (wAttr ? parseFloat(wAttr) : 0) || 100;
-                    const h =
-                        Math.ceil(rect.height) || (hAttr ? parseFloat(hAttr) : 0) || 100;
+                    const w = Math.ceil(rect.width) || (wAttr ? parseFloat(wAttr) : 0) || 100;
+                    const h = Math.ceil(rect.height) || (hAttr ? parseFloat(hAttr) : 0) || 100;
 
                     const svgClone = svg.cloneNode(true) as SVGSVGElement;
 
