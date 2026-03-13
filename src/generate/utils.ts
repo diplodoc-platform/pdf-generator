@@ -166,32 +166,57 @@ export async function removeFirstNPageNumbers(inputPath: string, n: number) {
 // Fixes rendering of complex inline SVGs (e.g. with masks, patterns, xlink:href)
 // which Chromium's PDF print pipeline sometimes fails to render.
 export async function rasterizeInlineSvgs(page: import('puppeteer-core').Page) {
-    await page.evaluate(async () => {
-        const svgs = Array.from(document.querySelectorAll<SVGSVGElement>('svg'));
+    await page.evaluate(
+        () =>
+            new Promise<void>((resolveAll) => {
+                const svgs = Array.from(document.querySelectorAll<SVGSVGElement>('svg'));
 
-        const promises = svgs.map(
-            (svg) =>
-                new Promise<void>((resolve) => {
+                if (svgs.length === 0) {
+                    resolveAll();
+                    return;
+                }
+
+                let pending = svgs.length;
+
+                const done = () => {
+                    if (--pending === 0) resolveAll();
+                };
+
+                svgs.forEach((svg) => {
                     const rect = svg.getBoundingClientRect();
                     const wAttr = svg.getAttribute('width');
                     const hAttr = svg.getAttribute('height');
-                    const w = Math.ceil(rect.width) || (wAttr ? parseFloat(wAttr) : 0) || 100;
-                    const h = Math.ceil(rect.height) || (hAttr ? parseFloat(hAttr) : 0) || 100;
+                    const w =
+                        Math.ceil(rect.width) || (wAttr ? parseFloat(wAttr) : 0) || 100;
+                    const h =
+                        Math.ceil(rect.height) || (hAttr ? parseFloat(hAttr) : 0) || 100;
 
-                    const svgStr = new XMLSerializer().serializeToString(svg);
-                    const dataUrl =
-                        'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgStr);
+                    const svgClone = svg.cloneNode(true) as SVGSVGElement;
+
+                    if (!svgClone.getAttribute('xmlns')) {
+                        svgClone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+                    }
+
+                    const svgStr = new XMLSerializer().serializeToString(svgClone);
+                    const blob = new Blob([svgStr], {type: 'image/svg+xml;charset=utf-8'});
+                    const dataUrl = URL.createObjectURL(blob);
 
                     const img = new Image();
 
+                    const timeout = setTimeout(() => {
+                        URL.revokeObjectURL(dataUrl);
+                        console.warn('Timeout rasterizing inline SVG');
+                        done();
+                    }, 5000);
+
                     img.onload = () => {
+                        clearTimeout(timeout);
                         const canvas = document.createElement('canvas');
+                        canvas.width = w * 2;
+                        canvas.height = h * 2;
 
-                        canvas.width = w;
-                        canvas.height = h;
-
-                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                         const ctx = canvas.getContext('2d')!;
+                        ctx.scale(2, 2);
 
                         try {
                             ctx.drawImage(img, 0, 0, w, h);
@@ -201,25 +226,29 @@ export async function rasterizeInlineSvgs(page: import('puppeteer-core').Page) {
                             replacement.height = h;
                             replacement.style.display = 'inline-block';
                             replacement.style.verticalAlign = 'middle';
-                            svg.parentNode?.replaceChild(replacement, svg);
+
+                            if (svg.parentNode) {
+                                svg.parentNode.replaceChild(replacement, svg);
+                            }
                         } catch (e) {
                             console.warn('Failed to rasterize inline SVG:', e);
                         } finally {
-                            resolve();
+                            URL.revokeObjectURL(dataUrl);
+                            done();
                         }
                     };
 
                     img.onerror = (e) => {
+                        clearTimeout(timeout);
+                        URL.revokeObjectURL(dataUrl);
                         console.warn('Failed to load inline SVG as image:', e);
-                        resolve();
+                        done();
                     };
 
                     img.src = dataUrl;
-                }),
-        );
-
-        await Promise.all(promises);
-    });
+                });
+            }),
+    );
 }
 
 // Rasterizes SVG <img> elements to PNG via canvas.
