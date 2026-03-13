@@ -162,6 +162,66 @@ export async function removeFirstNPageNumbers(inputPath: string, n: number) {
     writeFileSync(inputPath, modifiedPdfBytes);
 }
 
+// Rasterizes inline <svg> elements to PNG via canvas.
+// Fixes rendering of complex inline SVGs (e.g. with masks, patterns, xlink:href)
+// which Chromium's PDF print pipeline sometimes fails to render.
+export async function rasterizeInlineSvgs(page: import('puppeteer-core').Page) {
+    await page.evaluate(async () => {
+        const svgs = Array.from(document.querySelectorAll<SVGSVGElement>('svg'));
+
+        const promises = svgs.map(
+            (svg) =>
+                new Promise<void>((resolve) => {
+                    const rect = svg.getBoundingClientRect();
+                    const wAttr = svg.getAttribute('width');
+                    const hAttr = svg.getAttribute('height');
+                    const w = Math.ceil(rect.width) || (wAttr ? parseFloat(wAttr) : 0) || 100;
+                    const h = Math.ceil(rect.height) || (hAttr ? parseFloat(hAttr) : 0) || 100;
+
+                    const svgStr = new XMLSerializer().serializeToString(svg);
+                    const dataUrl =
+                        'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgStr);
+
+                    const img = new Image();
+
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+
+                        canvas.width = w;
+                        canvas.height = h;
+
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                        const ctx = canvas.getContext('2d')!;
+
+                        try {
+                            ctx.drawImage(img, 0, 0, w, h);
+                            const replacement = document.createElement('img');
+                            replacement.src = canvas.toDataURL('image/png');
+                            replacement.width = w;
+                            replacement.height = h;
+                            replacement.style.display = 'inline-block';
+                            replacement.style.verticalAlign = 'middle';
+                            svg.parentNode?.replaceChild(replacement, svg);
+                        } catch (e) {
+                            console.warn('Failed to rasterize inline SVG:', e);
+                        } finally {
+                            resolve();
+                        }
+                    };
+
+                    img.onerror = (e) => {
+                        console.warn('Failed to load inline SVG as image:', e);
+                        resolve();
+                    };
+
+                    img.src = dataUrl;
+                }),
+        );
+
+        await Promise.all(promises);
+    });
+}
+
 // Rasterizes SVG <img> elements to PNG via canvas.
 // Fixes rendering of complex SVGs (e.g. with embedded base64 PNG, masks, xlink:href)
 // which Chromium's PDF print pipeline sometimes fails to render.

@@ -15,6 +15,7 @@ import {
     calculateRelativePathsForPdf,
     compressPageImages,
     generatePdfStaticMarkup,
+    rasterizeInlineSvgs,
     rasterizeSvgImages,
     removeFirstNPageNumbers,
 } from './utils';
@@ -97,6 +98,7 @@ async function generatePdf({
         });
 
         await rasterizeSvgImages(page);
+        await rasterizeInlineSvgs(page);
 
         if (imageQuality !== undefined && imageQuality < 100) {
             await compressPageImages(page, imageQuality);
