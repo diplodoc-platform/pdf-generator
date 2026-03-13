@@ -18,6 +18,7 @@ const handler = async (args: Arguments<any>) => {
     const customHeader = args['custom-header'];
     const customFooter = args['custom-footer'];
     const imageQuality = args['image-quality'];
+    const rasterizeSvg = args['rasterize-svg'];
 
     const status = await generatePdfs({
         inputFolder,
@@ -27,6 +28,7 @@ const handler = async (args: Arguments<any>) => {
         customHeader,
         customFooter,
         imageQuality,
+        rasterizeSvg,
     });
 
     switch (status) {
@@ -89,7 +91,16 @@ function builder<T>(argv: Argv<T>) {
                 'Example: --image-quality 80\n',
             type: 'number',
         })
+        .option('rasterize-svg', {
+            default: false,
+            describe:
+                'Rasterize SVG images (both inline <svg> and <img src="*.svg">) to PNG via canvas ' +
+                'before PDF generation. Fixes rendering of complex SVGs with masks, patterns or xlink:href.\n' +
+                'Example: --rasterize-svg\n',
+            type: 'boolean',
+        })
         .example('pdf-generator -i ./input', '')
+        .example('pdf-generator -i ./input --rasterize-svg', '')
         .example('pdf-generator -i ./input --image-quality 80', '')
         .demandOption(['input'], 'Please provide input argument to work with this tool');
 }
