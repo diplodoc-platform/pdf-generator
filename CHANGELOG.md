@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.3.2](https://github.com/diplodoc-platform/pdf-generator/compare/v1.3.1...v1.3.2) (2026-03-13)
+
+
+### Bug Fixes
+
+* fixed ([71784e4](https://github.com/diplodoc-platform/pdf-generator/commit/71784e47cec9c222b427b572d6f5c6dff0eefd3a))
+* fixed inline svg ([4afc3c0](https://github.com/diplodoc-platform/pdf-generator/commit/4afc3c01bc4aed25ff22b290e67b065082cfc727))
+* fixed inline svg ([53c2d60](https://github.com/diplodoc-platform/pdf-generator/commit/53c2d600d0733143a30c4fc0a09facfcff81c027))
+
 ## [1.3.1](https://github.com/diplodoc-platform/pdf-generator/compare/v1.3.0...v1.3.1) (2026-03-12)
 
 
