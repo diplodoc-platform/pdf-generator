@@ -18,6 +18,7 @@ import {
     rasterizeInlineSvgs,
     rasterizeSvgImages,
     removeFirstNPageNumbers,
+    removeLastNPageNumbers,
 } from './utils';
 
 export interface GeneratePDFOptions {
@@ -81,6 +82,7 @@ async function generatePdf({
 
     const pdfFileContent = generatePdfStaticMarkup({
         titlePages: parsedSinglePageData.data.pdfTitlePages?.content ?? '',
+        endingPages: parsedSinglePageData.data.pdfEndingPages?.content ?? '',
         html: parsedSinglePageData.data.html ?? '',
         tocHtml: generateTOCHTML(parsedSinglePageTOCData.items),
         base: parsedSinglePageData.router.base,
@@ -149,7 +151,7 @@ async function generatePdf({
 
         const toc: TOCEntry[] = generateTOC(parsedSinglePageTOCData.items);
 
-        const inputPdf = readFileSync(fullPdfFilePath);
+        const inputPdf = new Uint8Array(readFileSync(fullPdfFilePath));
 
         const outputPdf = await addBookmarksFromTOC(inputPdf, toc);
 
@@ -157,8 +159,14 @@ async function generatePdf({
         writeFileSync(fullPdfFilePath, outputPdf);
 
         const titlesPageCount = parsedSinglePageData.data.pdfTitlePages?.pageCount;
+        const endingsPageCount = parsedSinglePageData.data.pdfEndingPages?.pageCount;
+
         if (titlesPageCount) {
             await removeFirstNPageNumbers(fullPdfFilePath, titlesPageCount);
+        }
+
+        if (endingsPageCount) {
+            await removeLastNPageNumbers(fullPdfFilePath, endingsPageCount);
         }
     } catch (error) {
         result.status = Status.FAIL;
