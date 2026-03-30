@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.4.0](https://github.com/diplodoc-platform/pdf-generator/compare/v1.3.3...v1.4.0) (2026-03-30)
+
+
+### Features
+
+* added ending pages ([5392ae7](https://github.com/diplodoc-platform/pdf-generator/commit/5392ae79ba7e028852e49b62c563a1080f9b50e7))
+* added ending pages ([73f49ee](https://github.com/diplodoc-platform/pdf-generator/commit/73f49ee9cda337a757903f1f999acd961ca781e6))
+
+
+### Bug Fixes
+
+* added viewport ([c86ac28](https://github.com/diplodoc-platform/pdf-generator/commit/c86ac2899a9197a0e50051be6008a2f487639740))
+* fixed text size adjust ([102df5d](https://github.com/diplodoc-platform/pdf-generator/commit/102df5d98fb2591c206ddd789584327c3d3a470e))
+* fixed text size adjust and viewport ([337d825](https://github.com/diplodoc-platform/pdf-generator/commit/337d82586b6b1a5cb281015e13c80301fa74dbb8))
+* setting viewport ([58482ad](https://github.com/diplodoc-platform/pdf-generator/commit/58482ad5255f36df41d82110683c2a39af62e660))
+* updated snapshots ([b398082](https://github.com/diplodoc-platform/pdf-generator/commit/b3980827c3218107a2a54cf736c79b01b249850d))
+
 ## [1.3.3](https://github.com/diplodoc-platform/pdf-generator/compare/v1.3.2...v1.3.3) (2026-03-13)
 
 
