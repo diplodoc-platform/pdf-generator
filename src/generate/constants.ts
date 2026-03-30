@@ -117,22 +117,42 @@ export const PDF_STYLE_OVERRIDE = `
     main.yfm .yfm-page-constructor {
         transform: scale(0.95);
     }
-    
+
     .yfm .yfm-table-container {
         position: static !important;
         height: fit-content !important;
+        overflow: visible !important;
     }
-    
+
     .yfm .yfm-table-container > table {
         transform: scale(0.9) !important;
         position: static !important;
     }
-    
+
     .yfm .yfm-table-container > table th,
     .yfm .yfm-table-container > table td {
         white-space: normal;
     }
-    
+
+    .yfm table[sticky-header] {
+        position: static;
+        overflow: visible;
+        display: table;
+    }
+
+    .yfm table[sticky-header] thead,
+    .yfm table[sticky-header] tbody,
+    .yfm table[sticky-header] tr,
+    .yfm table[sticky-header] th,
+    .yfm table[sticky-header] td {
+        position: static;
+        white-space: normal;
+    }
+
+    p[sticky-header] {
+        display: none;
+    }
+
     .shadow, .card, [class*="shadow"] {
         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
     }
@@ -140,10 +160,6 @@ export const PDF_STYLE_OVERRIDE = `
     pre, pre code {
         white-space: pre-wrap !important;
         word-break: break-all !important;
-        overflow: visible !important;
-    }
-
-    .yfm .yfm-table-container {
         overflow: visible !important;
     }
 
