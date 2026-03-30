@@ -134,16 +134,23 @@ export const PDF_STYLE_OVERRIDE = `
         white-space: normal;
     }
 
-    .yfm table[sticky-header="true"] {
-        position: static !important;
-        overflow: visible !important;
-        display: table !important;
+    .yfm table[sticky-header] {
+        position: static;
+        overflow: visible;
+        display: table;
     }
 
-    .yfm table[sticky-header="true"] th,
-    .yfm table[sticky-header="true"] td {
-        position: static !important;
-        white-space: normal !important;
+    .yfm table[sticky-header] thead,
+    .yfm table[sticky-header] tbody,
+    .yfm table[sticky-header] tr,
+    .yfm table[sticky-header] th,
+    .yfm table[sticky-header] td {
+        position: static;
+        white-space: normal;
+    }
+
+    p[sticky-header] {
+        display: none;
     }
 
     .shadow, .card, [class*="shadow"] {

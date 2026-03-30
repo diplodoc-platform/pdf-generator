@@ -14,6 +14,8 @@ items:
     href: tabs.md
   - name: Table
     href: table.md
+  - name: Sticky table
+    href: table-sticky.md
   - name: Note
     href: note.md
   - name: Code
