@@ -94,6 +94,8 @@ async function generatePdf({
     try {
         const page = await browser.newPage();
 
+        await page.setViewport({width: 1280, height: 960});
+
         await page.goto(`file://${pdfFileSourcePath}`, {
             waitUntil: 'networkidle2',
             timeout: 0,
