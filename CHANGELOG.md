@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.1](https://github.com/diplodoc-platform/pdf-generator/compare/v1.4.0...v1.4.1) (2026-03-30)
+
+
+### Bug Fixes
+
+* added tests ([1bf70bc](https://github.com/diplodoc-platform/pdf-generator/commit/1bf70bc47468de57ff0d0aa5317742f359120b6d))
+* fixed tables with sticky-header ([d80aec9](https://github.com/diplodoc-platform/pdf-generator/commit/d80aec91a2de8af4eeab7d75fa9fc8c0ce9437e9))
+* fixed tables with sticky-header ([ba6c4e9](https://github.com/diplodoc-platform/pdf-generator/commit/ba6c4e92eb76a4f63d29e9024ceb7246e8b8f14c))
+
 ## [1.4.0](https://github.com/diplodoc-platform/pdf-generator/compare/v1.3.3...v1.4.0) (2026-03-30)
 
 
