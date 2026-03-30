@@ -15,7 +15,7 @@ describe('integration', () => {
         height: 1123,
     };
     const convertPdf2Pic = fromPath(pdfFile, options);
-    const numberOfPages = 14;
+    const numberOfPages = 17;
 
     beforeAll(async () => {
         execSync(

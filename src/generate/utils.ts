@@ -21,6 +21,7 @@ import {
 
 type MarkupGeneratorOptions = {
     titlePages: string;
+    endingPages: string;
     html: string;
     tocHtml: string;
     base?: string;
@@ -69,6 +70,7 @@ export function calculateRelativePathsForPdf(
 
 export function generatePdfStaticMarkup({
     titlePages,
+    endingPages,
     html,
     tocHtml,
     base,
@@ -118,6 +120,7 @@ export function generatePdfStaticMarkup({
                     mermaid.run();
                 });
             </script>
+            ${endingPages}
             </body>
         </html>
     `.trim();
@@ -140,27 +143,32 @@ export function prepareGlobs(items: string[]) {
     ]);
 }
 
-export async function removeFirstNPageNumbers(inputPath: string, n: number) {
-    const pdfBytes = readFileSync(inputPath);
-    const pdfDoc = await PDFDocument.load(pdfBytes);
+async function removePageNumbers(inputPath: string, getIndices: (total: number) => number[]) {
+    const pdfDoc = await PDFDocument.load(new Uint8Array(readFileSync(inputPath)));
     const pages = pdfDoc.getPages();
 
-    for (let i = 0; i < Math.min(n, pages.length); i++) {
+    for (const i of getIndices(pages.length)) {
         const page = pages[i];
         const {width, height} = page.getSize();
 
         page.setCropBox(0, 50, width, height - 80);
-        page.drawRectangle({
-            x: 0,
-            y: 0,
-            width: width,
-            height: 50,
-            color: rgb(1, 1, 1),
-        });
+        page.drawRectangle({x: 0, y: 0, width, height: 50, color: rgb(1, 1, 1)});
     }
 
-    const modifiedPdfBytes = await pdfDoc.save();
-    writeFileSync(inputPath, modifiedPdfBytes);
+    writeFileSync(inputPath, await pdfDoc.save());
+}
+
+export function removeFirstNPageNumbers(inputPath: string, n: number) {
+    return removePageNumbers(inputPath, (total) =>
+        Array.from({length: Math.min(n, total)}, (_, i) => i),
+    );
+}
+
+export function removeLastNPageNumbers(inputPath: string, n: number) {
+    return removePageNumbers(inputPath, (total) => {
+        const start = Math.max(0, total - n);
+        return Array.from({length: total - start}, (_, i) => start + i);
+    });
 }
 
 // Rasterizes inline <svg> elements to PNG via canvas.
