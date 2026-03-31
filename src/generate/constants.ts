@@ -125,8 +125,9 @@ export const PDF_STYLE_OVERRIDE = `
     }
 
     .yfm .yfm-table-container > table {
-        transform: scale(0.9) !important;
         position: static !important;
+        transform: scale(1) !important;
+        zoom: 0.9 !important;
     }
 
     .yfm .yfm-table-container > table th,
@@ -166,4 +167,51 @@ export const PDF_STYLE_OVERRIDE = `
     main.yfm {
         overflow-wrap: break-word;
     }
+
+    .pdf h1, .pdf h2, .pdf h3, .pdf h4, .pdf h5, .pdf h6 {
+        page-break-after: avoid;
+        page-break-inside: avoid;
+        break-after: avoid-page;
+        break-inside: avoid-page;
+    }
+
+    .yfm-note-content *:last-child {
+        margin-bottom: 0;
+    }
+
+    .pdf .yfm table {
+        display: table;
+    }
+
+    .pdf .yfm-tabs {
+        page-break-inside: avoid;
+        break-inside: avoid-page;
+    }
+
+    .pdf .yfm-tab-list {
+        page-break-after: avoid;
+        break-after: avoid-page;
+    }
+
+    .pdf .yfm-tab-panel {
+        page-break-before: avoid;
+        break-before: avoid-page;
+    }
 `;
+
+export const RTL_LANGS = [
+    'ar',
+    'arc',
+    'ckb',
+    'dv',
+    'fa',
+    'ha',
+    'he',
+    'khw',
+    'ks',
+    'ps',
+    'sd',
+    'ur',
+    'uz_AF',
+    'yi',
+];
