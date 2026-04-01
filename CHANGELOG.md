@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/diplodoc-platform/pdf-generator/compare/v1.4.1...v1.4.2) (2026-04-01)
+
+
+### Bug Fixes
+
+* improve PDF rendering and layout ([#75](https://github.com/diplodoc-platform/pdf-generator/issues/75)) ([dd0ca90](https://github.com/diplodoc-platform/pdf-generator/commit/dd0ca9070ce944e9d39cb817b207644e13226015))
+
 ## [1.4.1](https://github.com/diplodoc-platform/pdf-generator/compare/v1.4.0...v1.4.1) (2026-03-30)
 
 
