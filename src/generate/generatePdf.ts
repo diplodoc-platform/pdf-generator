@@ -8,6 +8,7 @@ import {
     PDF_FILENAME,
     PDF_SOURCE_FILENAME,
     PUPPETEER_PAGE_OPTIONS,
+    RTL_LANGS,
     Status,
 } from './constants';
 import {TOCEntry, addBookmarksFromTOC, generateTOC, generateTOCHTML} from './generatePdfTOC';
@@ -67,15 +68,21 @@ async function generatePdf({
 
     const parsedSinglePageTOCData = JSON.parse(TOCJSONInput);
 
-    const cssLink = parsedSinglePageData.data.cssLink ?? [];
+    const cssLink: string[] = parsedSinglePageData.data.cssLink?.slice(0) ?? [];
+
     cssLink.push(...(parsedSinglePageData.data.meta.style ?? []));
 
     /* Save PDF source file */
     const pdfDirPath = dirname(singlePagePath);
     const pdfFileSourcePath = join(pdfDirPath, PDF_SOURCE_FILENAME);
 
+    const isRTL = RTL_LANGS.includes(parsedSinglePageData.lang);
+    const filteredCssLinks = cssLink.filter((link) => {
+        return isRTL || !link.endsWith('.rtl.css');
+    });
+
     const {cssLink: correctedCssLinks} = calculateRelativePathsForPdf(
-        parsedSinglePageData.data.cssLink ?? [],
+        filteredCssLinks,
         [],
         pdfFileSourcePath,
     );
