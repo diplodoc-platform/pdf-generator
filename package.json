@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/diplodoc-platform/pdf-generator"
+    "url": "git+https://github.com/diplodoc-platform/pdf-generator.git"
   },
   "bin": {
     "pdf-generator": "build/cmd/index.js"
