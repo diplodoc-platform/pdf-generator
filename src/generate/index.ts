@@ -112,7 +112,8 @@ async function launchBrowser(disableWebSecurity = false) {
     return await stats.puppeteer.launch({
         ...PUPPETEER_BROWSER_LAUNCH_OPTIONS,
         args,
-        protocolTimeout: 600_000,
+        // 1h
+        protocolTimeout: 3_600_000,
         executablePath: stats.executablePath,
     });
 }
