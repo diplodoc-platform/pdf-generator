@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/diplodoc-platform/pdf-generator/compare/v1.4.2...v1.4.3) (2026-04-15)
+
+
+### Bug Fixes
+
+* increase protocol timeout ([#78](https://github.com/diplodoc-platform/pdf-generator/issues/78)) ([7e0e80e](https://github.com/diplodoc-platform/pdf-generator/commit/7e0e80e189ec54bfe1818995df4c115ff1bf79a3))
+
 ## [1.4.2](https://github.com/diplodoc-platform/pdf-generator/compare/v1.4.1...v1.4.2) (2026-04-01)
 
 
