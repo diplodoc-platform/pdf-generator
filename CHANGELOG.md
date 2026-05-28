@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.4](https://github.com/diplodoc-platform/pdf-generator/compare/v1.4.3...v1.4.4) (2026-05-28)
+
+
+### Bug Fixes
+
+* **deps:** updated transform ([2051946](https://github.com/diplodoc-platform/pdf-generator/commit/2051946b9ffe5c7232969bb88f3514c340d925ca))
+* **deps:** updated transform ([f9c7053](https://github.com/diplodoc-platform/pdf-generator/commit/f9c70538eacb614f2fca644430985c960673832e))
+
 ## [1.4.3](https://github.com/diplodoc-platform/pdf-generator/compare/v1.4.2...v1.4.3) (2026-04-15)
 
 
