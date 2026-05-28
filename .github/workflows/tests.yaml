@@ -16,7 +16,7 @@ jobs:
       - run: sudo apt-get install graphicsmagick
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: ${{ vars.NODE_VERSION }}
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - name: Run tests
