@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.5.0](https://github.com/diplodoc-platform/pdf-generator/compare/v1.4.4...v1.5.0) (2026-06-01)
+
+
+### Features
+
+* added terms in pdf ([7c677b3](https://github.com/diplodoc-platform/pdf-generator/commit/7c677b389cde436b4cee7b53d74a679282531007))
+* added terms in pdf ([642ad9d](https://github.com/diplodoc-platform/pdf-generator/commit/642ad9d2f550501eea81a32f0e5fb6bff4b0faff))
+
+
+### Bug Fixes
+
+* fixed images ([071ad08](https://github.com/diplodoc-platform/pdf-generator/commit/071ad085243d747829e9a51da67585f2818fdf60))
+* fixed screenshots ([a2a217f](https://github.com/diplodoc-platform/pdf-generator/commit/a2a217f2ee710b457107b95e51da922101436218))
+* fixed transform ([a236be3](https://github.com/diplodoc-platform/pdf-generator/commit/a236be31a711b8b3ef57116b8056f52ed85c0926))
+* fixed transform ([0af9ec1](https://github.com/diplodoc-platform/pdf-generator/commit/0af9ec177bf945c4cec99dafe6d210cba7539529))
+* node 22 ([92ddb26](https://github.com/diplodoc-platform/pdf-generator/commit/92ddb26b63819b70c709dd92eeab9d3158b609b2))
+
 ## [1.4.4](https://github.com/diplodoc-platform/pdf-generator/compare/v1.4.3...v1.4.4) (2026-05-28)
 
 
