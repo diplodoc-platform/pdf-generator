@@ -28,7 +28,7 @@
     "prepublishOnly": "npm run lint && npm run build"
   },
   "dependencies": {
-    "@diplodoc/transform": "^4.75.4",
+    "@diplodoc/transform": "4.57.5",
     "async": "^3.2.4",
     "pdf-lib": "^1.17.1",
     "puppeteer-chromium-resolver": "^19.1.0",
