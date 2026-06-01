@@ -78,6 +78,8 @@ export function generatePdfStaticMarkup({
     script,
     cssLink,
 }: MarkupGeneratorOptions) {
+    const processedHtml = termsProcessing(html);
+
     return `
         <!doctype html>
         <html>
@@ -103,7 +105,7 @@ export function generatePdfStaticMarkup({
             ${tocHtml}
             </nav>
             <main class="yfm">
-            ${html}
+            ${processedHtml}
             </main>
             <script>
                 ${yfmJS}
@@ -124,6 +126,54 @@ export function generatePdfStaticMarkup({
             </body>
         </html>
     `.trim();
+}
+
+export function termsProcessing(html: string) {
+    let processedHtml = html.replace(/yfm-term_dfn/g, 'yfm-term_dfn open');
+
+    let counterDfn = 1;
+    let counterTerm = 1;
+
+    processedHtml = processedHtml.replace(
+        /(<dfn\b[^>]*\bclass="[^"]*\byfm-term_dfn\b[^"]*"[^>]*>)([\s\S]*?)(<\/dfn>)/g,
+        (match, openTag, content, closeTag) => {
+            const idMatch = /\bid="([^"]*)"/.exec(openTag);
+
+            if (!idMatch) {
+                return match;
+            }
+
+            const newContent = content.replace(/(<[^>]+>)/, `$1<sup>${counterDfn++}</sup> `);
+
+            return `${openTag}${newContent}${closeTag}`;
+        },
+    );
+
+    processedHtml = processedHtml.replace(
+        /(<i\b[^>]*\bclass="[^"]*\byfm-term_title\b[^"]*"[^>]*>)([\s\S]*?)(<\/i>)/g,
+        (match, openTag, content, closeTag) => {
+            const aria = /\baria-controls="([^"]*)"/.exec(openTag);
+            const key = /\bterm-key="([^"]*)"/.exec(openTag);
+
+            let target: string | null = null;
+
+            if (aria) {
+                target = aria[1];
+            } else if (key) {
+                target = `${key[1]}_element`;
+            }
+
+            if (!target) {
+                return match;
+            }
+
+            const n = counterTerm++;
+
+            return `${openTag}<a href="#${target}">${content}<sup>${n}</sup></a>${closeTag}`;
+        },
+    );
+
+    return processedHtml;
 }
 
 export function filterPaths(paths: string[]): string[] {

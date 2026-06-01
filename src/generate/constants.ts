@@ -197,6 +197,35 @@ export const PDF_STYLE_OVERRIDE = `
         page-break-before: avoid;
         break-before: avoid-page;
     }
+
+    .pdf .yfm .yfm-term_title {
+        border-bottom: 1px dotted;
+    }
+
+    .pdf .yfm .yfm-term_title a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .pdf .yfm .yfm-term_dfn {
+        position: static;
+        display: block;
+        margin-top: 24px;
+        padding: 16px 0 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.2);
+        box-shadow: none;
+        font-size: 0.85em;
+    }
+
+    .pdf .yfm .yfm-term_dfn::before {
+        box-shadow: none;
+    }
+
+    .pdf .yfm .yfm-term_dfn + .yfm-term_dfn {
+        margin-top: 16px;
+        padding-top: 0;
+        border-top: none;
+    }
 `;
 
 export const RTL_LANGS = [
