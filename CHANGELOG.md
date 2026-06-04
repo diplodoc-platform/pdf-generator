@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.1](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.0...v1.5.1) (2026-06-04)
+
+
+### Bug Fixes
+
+* fixed pc in md files in pdf ([84b021c](https://github.com/diplodoc-platform/pdf-generator/commit/84b021cfe19cc31927ac1a8b0cbebbca660fd79a))
+* fixed pc in md files in pdf ([a6dbda8](https://github.com/diplodoc-platform/pdf-generator/commit/a6dbda82f6811c4b5adcac4902afbbbe002454d6))
+* fixed tests ([38f4d3c](https://github.com/diplodoc-platform/pdf-generator/commit/38f4d3c2a1e25ebd06ebbb167d9d7052f7cf9edd))
+* updated screens ([35e1de5](https://github.com/diplodoc-platform/pdf-generator/commit/35e1de58d08516b3f2650c978283fa3b3afec514))
+* updated snapshots ([4f4d684](https://github.com/diplodoc-platform/pdf-generator/commit/4f4d684289093f17e2080dc5e465aab8e77803ab))
+* updated snapshots ([23ca7a4](https://github.com/diplodoc-platform/pdf-generator/commit/23ca7a40a24893ed6b56fb3ee57f9cf60a8a795e))
+
 ## [1.5.0](https://github.com/diplodoc-platform/pdf-generator/compare/v1.4.4...v1.5.0) (2026-06-01)
 
 
