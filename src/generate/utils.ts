@@ -122,7 +122,7 @@ export function generatePdfStaticMarkup({
                     mermaid.run();
                 });
             </script>
-            ${endingPages}
+            ${endingPages ? `<div class="pdf-ending-pages">${endingPages}</div>` : ''}
             </body>
         </html>
     `.trim();

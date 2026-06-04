@@ -100,10 +100,32 @@ export const PDF_STYLE_OVERRIDE = `
         height: auto !important;
     }
 
-    /* Hide pdf-page-wrapper (including its page-break-after: always) when it contains
-       an unhydrated page-constructor — it renders as empty divs and creates a blank page */
-    .pdf-page-wrapper:has(.yfm-page-constructor[data-hydrated="false"]) {
+    .pdf-page-wrapper:has(.yfm-page-constructor[data-rendered="false"]) {
         display: none;
+    }
+
+    .pdf-ending-pages {
+        page-break-before: always;
+    }
+
+    .pc-card-layout-block .row {
+        display: block;
+        margin: 0;
+    }
+
+    .pc-card-layout-block__item {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+        max-width: 50%;
+        box-sizing: border-box;
+        page-break-inside: avoid;
+        break-inside: avoid-page;
+    }
+
+    .pc-header-block__content-inner {
+        flex: 0 0 100%;
+        max-width: 100%;
     }
 
     main.yfm, nav {
