@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.2](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.1...v1.5.2) (2026-06-11)
+
+
+### Bug Fixes
+
+* fixed terms in pdf ([26bebbb](https://github.com/diplodoc-platform/pdf-generator/commit/26bebbb5ac351093c6945622b20f6c8083c5da25))
+* fixed terms in pdf ([68f5773](https://github.com/diplodoc-platform/pdf-generator/commit/68f5773ecb9206906fd6c7046d18809fbefa741e))
+
 ## [1.5.1](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.0...v1.5.1) (2026-06-04)
 
 
