@@ -128,28 +128,37 @@ export function generatePdfStaticMarkup({
     `.trim();
 }
 
+const PDF_PAGE_DELIMITER = '<div class="pdf-page-wrapper"';
+
+type TermsState = {
+    counter: number;
+    numbers: Map<string, number>;
+};
+
 export function termsProcessing(html: string) {
-    let processedHtml = html.replace(/yfm-term_dfn/g, 'yfm-term_dfn open');
+    const state: TermsState = {counter: 1, numbers: new Map()};
 
-    let counterDfn = 1;
-    let counterTerm = 1;
+    const segments = html.split(PDF_PAGE_DELIMITER);
 
-    processedHtml = processedHtml.replace(
-        /(<dfn\b[^>]*\bclass="[^"]*\byfm-term_dfn\b[^"]*"[^>]*>)([\s\S]*?)(<\/dfn>)/g,
-        (match, openTag, content, closeTag) => {
-            const idMatch = /\bid="([^"]*)"/.exec(openTag);
+    return segments
+        .map((segment, index) => processTermsSegment(segment, `--p${index}`, state))
+        .join(PDF_PAGE_DELIMITER);
+}
 
-            if (!idMatch) {
-                return match;
-            }
+function processTermsSegment(segment: string, pageScope: string, state: TermsState) {
+    let processed = segment.replace(/yfm-term_dfn/g, 'yfm-term_dfn open');
 
-            const newContent = content.replace(/(<[^>]+>)/, `$1<sup>${counterDfn++}</sup> `);
+    const numberFor = (targetId: string) => {
+        const mapKey = `${pageScope}|${targetId}`;
 
-            return `${openTag}${newContent}${closeTag}`;
-        },
-    );
+        if (!state.numbers.has(mapKey)) {
+            state.numbers.set(mapKey, state.counter++);
+        }
 
-    processedHtml = processedHtml.replace(
+        return state.numbers.get(mapKey) as number;
+    };
+
+    processed = processed.replace(
         /(<i\b[^>]*\bclass="[^"]*\byfm-term_title\b[^"]*"[^>]*>)([\s\S]*?)(<\/i>)/g,
         (match, openTag, content, closeTag) => {
             const aria = /\baria-controls="([^"]*)"/.exec(openTag);
@@ -167,13 +176,31 @@ export function termsProcessing(html: string) {
                 return match;
             }
 
-            const n = counterTerm++;
+            const n = numberFor(target);
 
-            return `${openTag}<a href="#${target}">${content}<sup>${n}</sup></a>${closeTag}`;
+            return `${openTag}<a href="#${target}${pageScope}">${content}<sup>${n}</sup></a>${closeTag}`;
         },
     );
 
-    return processedHtml;
+    processed = processed.replace(
+        /(<dfn\b[^>]*\bclass="[^"]*\byfm-term_dfn\b[^"]*"[^>]*>)([\s\S]*?)(<\/dfn>)/g,
+        (match, openTag, content, closeTag) => {
+            const idMatch = /\bid="([^"]*)"/.exec(openTag);
+
+            if (!idMatch) {
+                return match;
+            }
+
+            const n = numberFor(idMatch[1]);
+            const scopedOpenTag = openTag.replace(/\bid="([^"]*)"/, `id="$1${pageScope}"`);
+            const trimmedContent = content.replace(/^\s+/, '').replace(/\s+$/, '');
+            const newContent = trimmedContent.replace(/(<[^>]+>)/, `$1<sup>${n}</sup> `);
+
+            return `${scopedOpenTag}${newContent}${closeTag}`;
+        },
+    );
+
+    return processed;
 }
 
 export function filterPaths(paths: string[]): string[] {
