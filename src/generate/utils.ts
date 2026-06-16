@@ -129,6 +129,9 @@ export function generatePdfStaticMarkup({
 }
 
 const PDF_PAGE_DELIMITER = '<div class="pdf-page-wrapper"';
+const DFN_PATTERN = '<dfn\\b[^>]*\\bclass="[^"]*\\byfm-term_dfn\\b[^"]*"[^>]*>[\\s\\S]*?<\\/dfn>';
+const DFN_RE = new RegExp(DFN_PATTERN, 'g');
+const DFN_RUN_RE = new RegExp(`(?:${DFN_PATTERN}\\s*)+`, 'g');
 
 type TermsState = {
     counter: number;
@@ -199,6 +202,14 @@ function processTermsSegment(segment: string, pageScope: string, state: TermsSta
             return `${scopedOpenTag}${newContent}${closeTag}`;
         },
     );
+
+    const dfnNumber = (dfn: string) => Number(/<sup>(\d+)<\/sup>/.exec(dfn)?.[1] ?? Infinity);
+
+    processed = processed.replace(DFN_RUN_RE, (run) => {
+        const dfns = run.match(DFN_RE) ?? [];
+
+        return dfns.sort((a, b) => dfnNumber(a) - dfnNumber(b)).join('\n');
+    });
 
     return processed;
 }
