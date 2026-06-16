@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.5.3](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.2...v1.5.3) (2026-06-16)
+
+
+### Bug Fixes
+
+* fixed defs order ([bc56528](https://github.com/diplodoc-platform/pdf-generator/commit/bc56528990625aeda0f8ff66eb2addf9466b80ad))
+* fixed defs order ([d8d184a](https://github.com/diplodoc-platform/pdf-generator/commit/d8d184ae6ae35bcb2bc43e3cdbaf0b21bfcfbdb5))
+* sep for windows ([b06f6f6](https://github.com/diplodoc-platform/pdf-generator/commit/b06f6f6b6c485867b8675933701ac153aa4f2fd5))
+
 ## [1.5.2](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.1...v1.5.2) (2026-06-11)
 
 
