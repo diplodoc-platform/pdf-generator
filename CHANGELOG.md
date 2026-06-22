@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.4](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.3...v1.5.4) (2026-06-22)
+
+
+### Bug Fixes
+
+* fixed images in tabs ([2ef75dc](https://github.com/diplodoc-platform/pdf-generator/commit/2ef75dc315f250c5fc59ed6ac2df84bce4a50242))
+* fixed images in tabs ([bc794f3](https://github.com/diplodoc-platform/pdf-generator/commit/bc794f39afaff1f4904ad92a78f6006e49e175cb))
+
 ## [1.5.3](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.2...v1.5.3) (2026-06-16)
 
 
