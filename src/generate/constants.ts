@@ -205,19 +205,10 @@ export const PDF_STYLE_OVERRIDE = `
         display: table;
     }
 
-    .pdf .yfm-tabs {
-        page-break-inside: avoid;
-        break-inside: avoid-page;
-    }
-
-    .pdf .yfm-tab-list {
+    .pdf .yfm-tab-panel::before {
+        display: block;
         page-break-after: avoid;
         break-after: avoid-page;
-    }
-
-    .pdf .yfm-tab-panel {
-        page-break-before: avoid;
-        break-before: avoid-page;
     }
 
     .pdf .yfm .yfm-term_title {
