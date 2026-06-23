@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.5.5](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.4...v1.5.5) (2026-06-23)
+
+
+### Bug Fixes
+
+* added linter ([a6b0e26](https://github.com/diplodoc-platform/pdf-generator/commit/a6b0e266893ea5efdc826b80383c7fc3277ddb4a))
+* fixed linter ([158cbb7](https://github.com/diplodoc-platform/pdf-generator/commit/158cbb76a8e4cae30d7c0f8968e30cf33e0c67fa))
+* fixed linter ([41e0bff](https://github.com/diplodoc-platform/pdf-generator/commit/41e0bffee0c57c40de69e93c1943d4524c154ba8))
+
 ## [1.5.4](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.3...v1.5.4) (2026-06-22)
 
 
