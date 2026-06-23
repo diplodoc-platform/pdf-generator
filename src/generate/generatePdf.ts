@@ -119,7 +119,10 @@ async function generatePdf({
             await compressPageImages(page, imageQuality);
         }
 
-        const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME).replace(`${sep}${PDF_DIRENAME}${sep}`, sep);
+        const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME).replace(
+            `${sep}${PDF_DIRENAME}${sep}`,
+            sep,
+        );
 
         /* PDF header/footer configuration */
         let headerTemplateVal = ' ';
