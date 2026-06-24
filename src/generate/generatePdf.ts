@@ -1,10 +1,9 @@
 import {PathOrFileDescriptor, existsSync, readFileSync, writeFileSync} from 'fs';
-import {dirname, join, sep} from 'path';
+import {dirname, join} from 'path';
 
 import {Browser} from 'puppeteer-core';
 
 import {
-    PDF_DIRENAME,
     PDF_FILENAME,
     PDF_SOURCE_FILENAME,
     PUPPETEER_PAGE_OPTIONS,
@@ -119,10 +118,7 @@ async function generatePdf({
             await compressPageImages(page, imageQuality);
         }
 
-        const fullPdfFilePath = join(pdfDirPath, PDF_FILENAME).replace(
-            `${sep}${PDF_DIRENAME}${sep}`,
-            sep,
-        );
+        const fullPdfFilePath = join(dirname(pdfDirPath), PDF_FILENAME);
 
         /* PDF header/footer configuration */
         let headerTemplateVal = ' ';
