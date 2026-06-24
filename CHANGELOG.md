@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.6](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.5...v1.5.6) (2026-06-24)
+
+
+### Bug Fixes
+
+* fixed pdf path processing ([631af45](https://github.com/diplodoc-platform/pdf-generator/commit/631af4593d2778f3f831d49cac6d9f505409d54c))
+* fixed pdf path processing ([8fad970](https://github.com/diplodoc-platform/pdf-generator/commit/8fad970805586dd8b4ebdebbbe28362e069fce32))
+
 ## [1.5.5](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.4...v1.5.5) (2026-06-23)
 
 
