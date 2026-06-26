@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.7](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.6...v1.5.7) (2026-06-26)
+
+
+### Bug Fixes
+
+* fixed pc link ([47f9241](https://github.com/diplodoc-platform/pdf-generator/commit/47f9241b558b8eb5fa94b0b2ac8905dbf866b1ec))
+* fixed pc link ([c44a86f](https://github.com/diplodoc-platform/pdf-generator/commit/c44a86f258b96a2532280e171820a587255f9f25))
+
 ## [1.5.6](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.5...v1.5.6) (2026-06-24)
 
 
