@@ -123,6 +123,13 @@ export const PDF_STYLE_OVERRIDE = `
         break-inside: avoid-page;
     }
 
+    .pc-card-layout-block__item > a {
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        color: inherit;
+    }
+
     .pc-header-block__content-inner {
         flex: 0 0 100%;
         max-width: 100%;
