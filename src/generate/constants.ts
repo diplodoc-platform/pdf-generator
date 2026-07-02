@@ -100,7 +100,10 @@ export const PDF_STYLE_OVERRIDE = `
         height: auto !important;
     }
 
-    .pdf-page-wrapper:has(.yfm-page-constructor[data-rendered="false"]) {
+    .pdf-page-wrapper:has(.yfm-page-constructor[data-rendered="false"]),
+    .pdf-page-wrapper:has(
+        .yfm-page-constructor[data-hydrated="false"] .pc-constructor-row > .col:empty
+    ) {
         display: none;
     }
 
