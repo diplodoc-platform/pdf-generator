@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.8](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.7...v1.5.8) (2026-07-02)
+
+
+### Bug Fixes
+
+* fixed empty pages ([86194af](https://github.com/diplodoc-platform/pdf-generator/commit/86194aff00a7187c26c206a635c07640fa1262b9))
+* fixed empty pages ([67de701](https://github.com/diplodoc-platform/pdf-generator/commit/67de701eb12b97c92e5001a05e2f80efc1a9cd38))
+
 ## [1.5.7](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.6...v1.5.7) (2026-06-26)
 
 
