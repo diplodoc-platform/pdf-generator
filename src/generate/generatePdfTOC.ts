@@ -2,7 +2,7 @@ import {PDFArray, PDFDict, PDFDocument, PDFHexString, PDFName, PDFNumber, PDFRef
 
 export interface TOCEntry {
     title: string;
-    pageIndex: number;
+    dest?: string;
     children?: TOCEntry[];
 }
 
@@ -15,17 +15,14 @@ type TOCItem = {
 };
 
 export function generateTOC(data: TOCItem[]): TOCEntry[] {
-    let counter = 0;
-
     function walk(items: TOCItem[]): TOCEntry[] {
         return items.map((item) => {
-            const currentIndex = counter++;
-
             const children = Array.isArray(item.items) ? walk(item.items) : undefined;
+            const dest = item.href ? item.href.replace(/^#/, '') : undefined;
 
             return {
                 title: item.name,
-                pageIndex: currentIndex,
+                ...(dest ? {dest} : {}),
                 ...(children && children.length > 0 ? {children} : {}),
             };
         });
@@ -48,6 +45,7 @@ export function generateTOCHTML(toc: TOCItem[]): string {
                       ? `<a href="${item.href}"${classAttr}>${item.name}</a>`
                       : `<span${classAttr}>${item.name}</span>`;
                   const children = item.items ? renderItems(item.items) : '';
+
                   return `<li>${link}${children}</li>`;
               })
               .join('\n')}
@@ -61,6 +59,28 @@ export function generateTOCHTML(toc: TOCItem[]): string {
     </div>`;
 }
 
+function resolveDest(entry: TOCEntry, pageIndexByDest: Map<string, number>): string | undefined {
+    if (entry.dest) {
+        if (pageIndexByDest.has(entry.dest)) {
+            return entry.dest;
+        }
+
+        if (pageIndexByDest.has(entry.dest + 'index')) {
+            return entry.dest + 'index';
+        }
+    }
+
+    for (const child of entry.children ?? []) {
+        const childDest = resolveDest(child, pageIndexByDest);
+
+        if (childDest) {
+            return childDest;
+        }
+    }
+
+    return undefined;
+}
+
 export async function addBookmarksFromTOC(
     pdfBytes: Uint8Array,
     toc: TOCEntry[],
@@ -68,6 +88,24 @@ export async function addBookmarksFromTOC(
     const pdfDoc = await PDFDocument.load(pdfBytes);
     const context = pdfDoc.context;
     const catalog = pdfDoc.catalog;
+
+    const pages = pdfDoc.getPages();
+    const refToIndex = new Map<string, number>();
+    pages.forEach((page, index) => refToIndex.set(page.ref.tag, index));
+
+    const pageIndexByDest = new Map<string, number>();
+    const dests = context.lookup(catalog.get(PDFName.of('Dests')));
+
+    if (dests instanceof PDFDict) {
+        for (const [key, value] of dests.entries()) {
+            const dest = context.lookup(value);
+            const pageRef = dest instanceof PDFArray ? dest.get(0) : undefined;
+
+            if (pageRef instanceof PDFRef && refToIndex.has(pageRef.tag)) {
+                pageIndexByDest.set(key.decodeText(), refToIndex.get(pageRef.tag) as number);
+            }
+        }
+    }
 
     let totalCount = 0;
 
@@ -80,13 +118,20 @@ export async function addBookmarksFromTOC(
 
         for (const entry of entries) {
             const title = PDFHexString.fromText(entry.title);
-            const pageRef = pdfDoc.getPages()[entry.pageIndex]?.ref;
-            const dest = context.obj([pageRef, PDFName.of('Fit')]) as PDFArray;
 
             const outlineItemDict = context.obj({
                 Title: title,
-                Dest: dest,
             }) as PDFDict;
+
+            const destName = resolveDest(entry, pageIndexByDest);
+
+            if (destName !== undefined) {
+                const page = pages[pageIndexByDest.get(destName) as number];
+                const {height} = page.getSize();
+                const dest = context.obj([page.ref, PDFName.of('XYZ'), 0, height, 0]);
+
+                outlineItemDict.set(PDFName.of('Dest'), dest);
+            }
 
             const outlineRef = context.register(outlineItemDict);
 
