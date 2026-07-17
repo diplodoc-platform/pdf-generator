@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.9](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.8...v1.5.9) (2026-07-17)
+
+
+### Bug Fixes
+
+* fixed bookmarks logic ([65b48a1](https://github.com/diplodoc-platform/pdf-generator/commit/65b48a1a3793c589b9917f1d1c05aa1fb62c2393))
+* fixed bookmarks logic ([8958fa5](https://github.com/diplodoc-platform/pdf-generator/commit/8958fa5cd93edbe395279f7fd090f3250072eb5c))
+
 ## [1.5.8](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.7...v1.5.8) (2026-07-02)
 
 
