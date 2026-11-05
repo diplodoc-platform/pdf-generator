@@ -207,6 +207,7 @@ export const PDF_STYLE_OVERRIDE = `
     }
 
     .pdf > main {
+        padding-bottom: 0;
         overflow-wrap: break-word;
     }
 
