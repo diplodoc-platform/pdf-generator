@@ -100,11 +100,11 @@ export function generatePdfStaticMarkup({
             ${injectPlatformAgnosticFonts ? FONTS_OVERRIDE : ''}
         </head>
         <body class="yfm pdf">
-            ${titlePages}
+            ${titlePages ? `<div class="pdf-starting-pages">${titlePages}</div>` : ''}
             <nav>
             ${tocHtml}
             </nav>
-            <main class="yfm">
+            <main>
             ${processedHtml}
             </main>
             <script>
