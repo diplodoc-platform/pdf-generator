@@ -96,7 +96,7 @@ export const PDF_STYLE_OVERRIDE = `
         }
     }
 
-    nav {
+    .pdf-starting-pages, nav {
         page-break-after: always;
     }
 
@@ -148,7 +148,7 @@ export const PDF_STYLE_OVERRIDE = `
         max-width: 100%;
     }
 
-    main.yfm, nav {
+    .pdf > main, nav {
         margin: 0 auto;
         min-width: 200px;
         max-width: 980px;
@@ -156,7 +156,7 @@ export const PDF_STYLE_OVERRIDE = `
         position: relative !important;
     }
 
-    main.yfm .yfm-page-constructor {
+    .pdf > main .yfm-page-constructor {
         transform: scale(0.95);
     }
 
@@ -206,7 +206,7 @@ export const PDF_STYLE_OVERRIDE = `
         overflow: visible !important;
     }
 
-    main.yfm {
+    .pdf > main {
         overflow-wrap: break-word;
     }
 
@@ -236,7 +236,7 @@ export const PDF_STYLE_OVERRIDE = `
         margin-bottom: 0;
     }
 
-    .pdf .yfm table {
+    .pdf.yfm > main table {
         display: table;
     }
 
@@ -246,16 +246,16 @@ export const PDF_STYLE_OVERRIDE = `
         break-after: avoid-page;
     }
 
-    .pdf .yfm .yfm-term_title {
+    .pdf.yfm > main .yfm-term_title {
         border-bottom: 1px dotted;
     }
 
-    .pdf .yfm .yfm-term_title a {
+    .pdf.yfm > main .yfm-term_title a {
         color: inherit;
         text-decoration: none;
     }
 
-    .pdf .yfm .yfm-term_dfn {
+    .pdf.yfm > main .yfm-term_dfn {
         position: static;
         display: block;
         margin-top: 24px;
@@ -265,11 +265,11 @@ export const PDF_STYLE_OVERRIDE = `
         font-size: 0.85em;
     }
 
-    .pdf .yfm .yfm-term_dfn::before {
+    .pdf.yfm > main .yfm-term_dfn::before {
         box-shadow: none;
     }
 
-    .pdf .yfm .yfm-term_dfn + .yfm-term_dfn {
+    .pdf.yfm > main .yfm-term_dfn + .yfm-term_dfn {
         margin-top: 16px;
         padding-top: 0;
         border-top: none;
