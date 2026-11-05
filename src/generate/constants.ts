@@ -84,6 +84,16 @@ export const PDF_STYLE_OVERRIDE = `
         nav .toc h2[data-original-article] {
             page-break-before: avoid;
         }
+
+        .pdf .yfm-tab {
+            display: none !important;
+        }
+
+        .pdf .no-break {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+            margin-bottom: 20px !important;
+        }
     }
 
     nav {
@@ -205,6 +215,21 @@ export const PDF_STYLE_OVERRIDE = `
         page-break-inside: avoid;
         break-after: avoid-page;
         break-inside: avoid-page;
+    }
+
+    .pdf p, .pdf h2, .pdf h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    .pdf tr, .pdf pre {
+        page-break-inside: avoid;
+        break-inside: avoid-page;
+    }
+
+    .pdf .yfm-cut-title {
+        page-break-after: avoid;
+        break-after: avoid-page;
     }
 
     .yfm-note-content *:last-child {
