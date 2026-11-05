@@ -12,6 +12,7 @@ import {
 } from './constants';
 import {TOCEntry, addBookmarksFromTOC, generateTOC, generateTOCHTML} from './generatePdfTOC';
 import {
+    appendAbsoluteUrls,
     calculateRelativePathsForPdf,
     compressPageImages,
     generatePdfStaticMarkup,
@@ -108,6 +109,10 @@ async function generatePdf({
             waitUntil: 'networkidle2',
             timeout: 0,
         });
+
+        if (parsedSinglePageData.data.showAbsoluteUrls === true) {
+            await appendAbsoluteUrls(page);
+        }
 
         if (rasterizeSvg) {
             await rasterizeSvgImages(page);

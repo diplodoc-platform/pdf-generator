@@ -231,6 +231,20 @@ export function prepareGlobs(items: string[]) {
     ]);
 }
 
+export async function appendAbsoluteUrls(page: import('puppeteer-core').Page) {
+    await page.evaluate(() => {
+        document.querySelectorAll('a[href]').forEach((link) => {
+            const href = link.getAttribute('href')?.trim() || '';
+
+            if (!/^https?:\/\//i.test(href) || link.textContent?.trim() === href) {
+                return;
+            }
+
+            link.append(document.createTextNode(` (${href})`));
+        });
+    });
+}
+
 async function removePageNumbers(inputPath: string, getIndices: (total: number) => number[]) {
     const pdfDoc = await PDFDocument.load(new Uint8Array(readFileSync(inputPath)));
     const pages = pdfDoc.getPages();
