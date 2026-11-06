@@ -1,5 +1,24 @@
 # Changelog
 
+## [2.0.0](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.9...v2.0.0) (2026-11-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* page layout has been changed
+
+### Features
+
+* added the showAbsoluteUrls flag and ported over useful styles ([6044fd7](https://github.com/diplodoc-platform/pdf-generator/commit/6044fd773500d879771b9263e4e99ab3f2ce0918))
+* added the showAbsoluteUrls flag and ported over useful styles ([90ebc9e](https://github.com/diplodoc-platform/pdf-generator/commit/90ebc9e5a7524bdbbdb83ec727135ad00c6f9c73))
+* page layout has been changed ([0e0c722](https://github.com/diplodoc-platform/pdf-generator/commit/0e0c722993617b788b849238949c04b4178ccb5e))
+
+
+### Bug Fixes
+
+* fixed padding ([94df2c9](https://github.com/diplodoc-platform/pdf-generator/commit/94df2c95e443184463976c7e02f57d522cd0d430))
+* fixed padding ([dcb1916](https://github.com/diplodoc-platform/pdf-generator/commit/dcb191649c890f1e9494e98235de7dfb2083e653))
+
 ## [1.5.9](https://github.com/diplodoc-platform/pdf-generator/compare/v1.5.8...v1.5.9) (2026-07-17)
 
 
